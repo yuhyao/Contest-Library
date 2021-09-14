@@ -4,6 +4,7 @@
 using namespace std;
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/hash_policy.hpp>
 using namespace __gnu_pbds;
 
 void VECTOR()
@@ -107,6 +108,8 @@ void PBDS()
     S.insert(2); //insert integer 2.
     printf("%d\n",(int)S.order_of_key(1)); //ask the number of elements in S which are greater than 1.
     printf("%d\n",*S.find_by_order(i)); //ask the i-th biggest element in S. i starts form 0.
+	
+	gp_hash_table<int,int> HT;
 }
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());

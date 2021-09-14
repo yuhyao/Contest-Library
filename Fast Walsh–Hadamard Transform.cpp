@@ -4,34 +4,63 @@
 #define mod 1000000007
 using namespace std;
 typedef long long ll;
-int inv2=(mod+1)>>1;
-int N;//should be power of 2.
-void FWT_or(int *a,int opt)
+
+ll qp(ll a,ll k)
 {
+    ll res=1;
+    while(k)
+    {
+        if(k&1) res=res*a%mod;
+        a=a*a%mod;
+        k>>=1;
+    }
+    return res;
+}
+
+inline void chadd(int &x,int y) {x+=y; if(x>=mod) x-=mod;}
+inline void chsub(int &x,int y) {x-=y; if(x<0) x+=mod;}
+
+void fwt_or(vi &a,int opt)
+{
+    int N=a.size();
     for(int i=1;i<N;i<<=1)
         for(int p=i<<1,j=0;j<N;j+=p)
             rep(k,0,i-1)
-                if(opt==1) a[i+j+k]=(a[j+k]+a[i+j+k])%mod;
-                else a[i+j+k]=(a[i+j+k]+mod-a[j+k])%mod;
+                if(opt==1) chadd(a[i+j+k],a[j+k]);
+                else chsub(a[i+j+k],a[j+k]);
 }
-void FWT_and(int *a,int opt)
+
+void fwt_and(vi &a,int opt)
 {
+    int N=a.size();
     for(int i=1;i<N;i<<=1)
         for(int p=i<<1,j=0;j<N;j+=p)
             rep(k,0,i-1)
-                if(opt==1) a[j+k]=(a[j+k]+a[i+j+k])%mod;
-                else a[j+k]=(a[j+k]+mod-a[i+j+k])%mod;
+                if(opt==1) chadd(a[j+k],a[i+j+k]);
+                else chsub(a[j+k],a[i+j+k]);
 }
-void FWT_xor(int *a,int opt)
+
+inline int Madd(int x,int y) {return x+y<mod?x+y:x+y-mod;}
+inline int Msub(int x,int y) {return x-y<0?x-y+mod:x-y;}
+
+void fwt_xor(vi &a,int opt)
 {
+    int N=a.size();
     ll fac=(opt==-1)?inv2:1;
     for(int i=1;i<N;i<<=1)
         for(int p=i<<1,j=0;j<N;j+=p)
             rep(k,0,i-1)
             {
                 int X=a[j+k],Y=a[i+j+k];
-                a[j+k]=fac*(X+Y)%mod;a[i+j+k]=fac*(X+mod-Y)%mod;
+                a[j+k]=Madd(X,Y); 
+				a[i+j+k]=Msub(X,Y)%mod;
             }
+            
+    if(opt==-1) 
+    {
+        int inv=qp(N,mod-2);
+        for(auto &x: a) x=1ll*x*inv%mod;
+    }
 }
 int calFWTxor(int *a,int id)
 {

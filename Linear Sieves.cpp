@@ -5,6 +5,7 @@ struct LinearSieve
     int d[maxn+5]={0,0},facnum[maxn+5]={1,1},phi[maxn+5]={0,1},mu[maxn+5]={0,1};
     void init(int n)
     {
+        prime.clear();
         rep(i,2,n)
         {
             if(np[i]==0)

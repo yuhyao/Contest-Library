@@ -35,7 +35,6 @@ pair<cost_t,flow_t> costflow(int n)
         rep(i,1,n) dis[i]=MC;
         rep(i,1,n) pre[i]=-1;
         rep(i,1,n) mark[i]=0;
-
         
         dis[src]=0; q.push({0,src});
         
