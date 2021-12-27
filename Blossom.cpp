@@ -1,3 +1,5 @@
+// Time complexity: O(|V||E|).
+// indices start from 1.
 struct Blossom
 {
     int n,tot;
@@ -75,7 +77,7 @@ struct Blossom
         }
         return 0;
     }
-	int work()
+    int work()
     {
         int ans=0;
         rep(i,1,n) if(match[i]==0) ans+=aug(i);

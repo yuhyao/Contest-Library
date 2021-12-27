@@ -1,11 +1,3 @@
-#include <bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 500
-#define pb push_back
-using namespace std;
-typedef pair<int,int> pii;
-typedef double db;
-
 const db eps=1e-9;
 const db pi=acos(-1.0);
 int cmp(db x) {return (x>eps)-(x<-eps);}

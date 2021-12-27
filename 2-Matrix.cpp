@@ -1,49 +1,57 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 10
-#define maxm 10
-using namespace std;
-
-int gcd(int a,int b){return (b==0)?a:gcd(b,a%b);}
-struct Matrix
+ll qp(ll a,ll k)
 {
-    int n,m;//n是行数，m是列数
-    int data[maxn+5][maxm*2+5];//处理实矩阵时用double，同时注意%不能使用
-    //maxm*2是为了防止矩阵求逆时越界
-    void Clear(){memset(data,0,sizeof data);}
-    Matrix(int x=0,int y=0):n(x),m(y){Clear();}//防止不必要的错误
-    Matrix operator +(const Matrix &A) const
+    ll res=1;
+    for(;k;a=a*a%mod,k>>=1) if(k&1) res=res*a%mod;
+    return res;
+}
+
+struct Mat // indices start from 1.
+{
+    int n,m;
+    int a[maxn+5][maxn*2+5];
+    int* operator [](const int &i) const {return (int*)a[i];}
+    Mat(int x=0,int y=0): n(x),m(y) {memset(a,0,sizeof a);}
+    Mat operator + (const Mat &b) const
     {
-        Matrix C(n,m);
-        rep(i,1,n) rep(j,1,m) C.data[i][j]=data[i][j]+A.data[i][j];
-        return C;
+        Mat c(n,m);
+        rep(i,1,n) rep(j,1,m) c[i][j]=(a[i][j]+b[i][j])%mod;
+        return c;
     }
-    Matrix operator -(const Matrix &A) const
+    Mat operator - (const Mat &b) const
     {
-        Matrix C(n,m);
-        rep(i,1,n) rep(j,1,m) C.data[i][j]=data[i][j]-A.data[i][j];
-        return C;
+        Mat c(n,m);
+        rep(i,1,n) rep(j,1,m) c[i][j]=(a[i][j]-b[i][j]+mod)%mod;
+        return c;
     }
-    Matrix operator *(const Matrix &A) const
+    Mat operator *(const Mat &b) const
     {
-        Matrix C(n,A.m);
-        rep(i,1,n) rep(j,1,A.m) rep(k,1,m)
-            C.data[i][j]+=data[i][k]*A.data[k][j];
-        return C;
-    }
-    Matrix operator %(const int &mod) const
-    {
-        Matrix C(n,m);
-        rep(i,1,n) rep(j,1,m) C.data[i][j]=data[i][j]%mod;
-        return C;
-    }
-    bool operator ==(const Matrix &A) const
-    {
-        if(m!=A.m || n!=A.n) return 0;
-        rep(i,1,n) rep(j,1,m) if(data[i][j]!=A.data[i][j]) return 0;
-        return 1;
+        Mat c(n,b.m);
+        rep(i,1,n) rep(j,1,b.m) rep(k,1,m) c[i][j]=(c[i][j]+a[i][k]*b[k][j])%mod;
+        return c;
     }
 };
+
+int Gaussian(Mat &A,int C) // do elimination up to C columns
+{
+    int rk=0, n=A.n, m=A.m;
+    rep(c,1,C)
+    {
+        int id=rk+1;
+        while(id<=n && A[id][c]==0) id++;
+        if(id>n) continue; 
+        rk++;
+        if(id!=rk) rep(j,1,m) swap(A[id][j],A[rk][j]);
+        int inv = qp(A[rk][c],mod-2);
+        rep(j,1,m) A[rk][j] = 1ll*A[rk][j]*inv%mod;
+        rep(i,1,n) if(i!=rk)
+        {
+            int fac = (mod-A[i][c])%mod;
+            rep(j,1,m) A[i][j] = (A[i][j] + 1ll*fac*A[rk][j])%mod;
+        }
+    }
+    return rk;
+}
+
 Matrix inverse(Matrix A)//求矩阵A的逆矩阵
 {
     int id,n=A.n;
@@ -66,7 +74,8 @@ Matrix inverse(Matrix A)//求矩阵A的逆矩阵
     rep(i,1,n) rep(j,1,n) C.data[i][j]=B.data[i][j+n];
     return C;
 }
-int Mrank(Matrix A)//求矩阵A的秩，如果矩阵元素是实数一定要加上eps
+//求矩阵A的秩，如果矩阵元素是实数一定要加上eps
+int Mrank(Matrix A)
 {
     Matrix B=A;
     int id,cnt=1,n=A.n,m=A.m;

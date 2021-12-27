@@ -1,12 +1,6 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define pb push_back
-#define inf 0x3f3f3f3f
-using namespace std;
-
 typedef int flow_t;
 typedef long long cost_t;
-const flow_t MF = inf;
+const flow_t MF = 0x3f3f3f3f;
 const cost_t MC = 1ll<<60;
 
 struct E {int u,v; flow_t c; cost_t w;};
@@ -24,43 +18,44 @@ void add(int u,int v,flow_t c,cost_t w)
 
 pair<cost_t,flow_t> costflow(int n)
 {
-    vector<cost_t> dis(n+1,0),h(n+1,0);
+    vector<cost_t> dis(n+1);
     vi pre(n+1);
     vector<bool> mark(n+1);
 
-    priority_queue<pair<cost_t,int> > q;
+    deque<int> q;
     cost_t cost=0; flow_t flow=0;
     while(1)
     {
         rep(i,1,n) dis[i]=MC;
         rep(i,1,n) pre[i]=-1;
         rep(i,1,n) mark[i]=0;
-        
-        dis[src]=0; q.push({0,src});
+        q.pb(src);
+        dis[src]=0; mark[src]=1;
         
         while(q.size())
         {
-            int now=q.top().SE; q.pop();
-            if(mark[now]) continue;
-            mark[now]=1;
+            int now=q.front(); q.pop_front(); mark[now]=0;
             for(auto i: to[now])
             {
                 int v=e[i].v;
-                if(dis[v]>dis[now]+e[i].w+h[now]-h[v] && e[i].c>0)
+                if(e[i].c>0 && chmin(dis[v],dis[now]+e[i].w))
                 {
-                    dis[v]=dis[now]+e[i].w+h[now]-h[v];
-                    q.push({-dis[v],v});
                     pre[v]=i;
+                    if(!mark[v])
+                    {
+                        if(!q.empty() && dis[v]>=dis[q.front()]) q.pb(v);
+                        else q.push_front(v);
+                        mark[v]=1;
+                    }
                 }
             }
         }
         if(dis[sink]==MC) break;
-        rep(i,1,n) h[i]+=dis[i];
         flow_t mf=MF;
         for(int i=pre[sink];~i;i=pre[e[i].u]) mf=min(mf,e[i].c);
         for(int i=pre[sink];~i;i=pre[e[i].u]) e[i].c-=mf,e[i^1].c+=mf;
         flow+=mf;
-        cost+=mf*h[sink];
+        cost+=mf*dis[sink];
     }
     return {cost,flow};
 }

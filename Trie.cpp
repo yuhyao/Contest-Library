@@ -1,8 +1,9 @@
 struct trie
 {
     #define C 26
-    int next[maxn*30+5][C];
-    array<int,maxn*30+5> cnt;
+    #define MAXN (maxn*30)
+    int next[MAXN+5][C];
+    array<int,MAXN+5> cnt;
     int tot,root;
     int newnode()
     {
@@ -38,4 +39,5 @@ struct trie
         return cnt[p];
     }
     #undef C
+    #undef MAXN
 }t;

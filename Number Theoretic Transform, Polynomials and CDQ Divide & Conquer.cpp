@@ -1,16 +1,10 @@
-const int mod=998244353;//469762049, 2281701377 are ok.
+const int mod = 998244353; // 469762049, 2281701377 are ok.
 ll qp(ll a,ll k)
 {
     ll res=1;
-    while(k)
-    {
-        if(k&1) res=res*a%mod;
-        a=a*a%mod;
-        k>>=1;
-    }
+    for(;k;a=a*a%mod,k>>=1) if(k&1) res=res*a%mod;
     return res;
 }
-
 inline int Madd(int x,int y) {return x+y<mod?x+y:x+y-mod;}
 inline int Msub(int x,int y) {return x-y<0?x-y+mod:x-y;}
 
@@ -22,8 +16,8 @@ struct Transform
     int n2,len;
 
     void init()
-    {
-        rep(i,0,20)
+    {   // mod = 998244353 supports length <= 2^23.
+        rep(i,0,29)
         {
             wn[i][0]=qp(g,(mod-1)/(1<<i));
             wn[i][1]=qp(wn[i][0],mod-2);
@@ -55,7 +49,6 @@ struct Transform
             rep(i,0,n2-1) a[i]=a[i]*inv%mod;
         }
     }
-
     void pre(int n) // set n2, r;
     {
         len=0;
@@ -63,7 +56,6 @@ struct Transform
         r.resize(n2);
         rep(i,1,n2-1) r[i]=(r[i>>1]>>1)|((i&1)<<(len-1));
     }
-
     vi conv(vi A,vi B)
     {
         int n=A.size()+B.size()-1;
@@ -95,34 +87,61 @@ struct Transform
         NTT(g,1);
         g.resize(n);
         return g;
-	}
+    }
 }ntt;
 
 typedef vector<int> poly;
 
+// input: [(a_0,f(a_0)), ..., (a_n,f(a_n))] of length n+1.
+// output: polynomial f of degree n.
+// Time complexity: O(n^2).
+poly interpolation(vector<pii> A)
+{
+    int n=A.size()-1;
+    poly fac(n+2,0),tmp(n+2),res(n+1,0); fac[0]=1;
+    rep(i,0,n)
+    {
+        per(j,0,i) 
+        {
+            fac[j+1]=(fac[j+1]+fac[j])%mod;
+            fac[j]=1ll*(mod-A[i].FI)*fac[j]%mod;
+        }
+    }
+    rep(i,0,n)
+    {
+        rep(j,0,n+1) tmp[j]=fac[j];
+        per(j,0,n) tmp[j]=(tmp[j]+1ll*A[i].FI*tmp[j+1])%mod;
+        rep(j,0,n) tmp[j]=tmp[j+1];
+        int mul=1;
+        rep(j,0,n) if(j!=i) mul=1ll*mul*(A[i].FI-A[j].FI+mod)%mod;
+        mul=1ll*qp(mul,mod-2)*A[i].SE%mod;
+        rep(j,0,n) res[j]=(res[j]+1ll*mul*tmp[j])%mod;
+    }
+    return res;
+}
 int eval(const poly &a,int x)
 {
-	int ans=0,pw=1;
-	for(auto c: a)
+    int ans=0,pw=1;
+    for(auto c: a)
     {
-		ans=(ans+1ll*c*pw)%mod;
-		pw=1ll*pw*x;
-	}
-	return ans;
+        ans=(ans+1ll*c*pw)%mod;
+        pw=1ll*pw*x;
+    }
+    return ans;
 }
 
 poly& operator +=(poly &a,const poly &b)
 {
-	if(a.size()<b.size()) a.resize(b.size(),0);
-	rep(i,0,(int)b.size()-1) a[i]=Madd(a[i],b[i]);
-	return a;
+    if(a.size()<b.size()) a.resize(b.size(),0);
+    rep(i,0,(int)b.size()-1) a[i]=Madd(a[i],b[i]);
+    return a;
 } 
 poly operator +(const poly &a,const poly &b) {auto c=a; return c+=b;}
 poly& operator -=(poly &a,const poly &b)
 {
-	if(a.size()<b.size()) a.resize(b.size(),0);
-	rep(i,0,(int)b.size()-1) a[i]=Msub(a[i],b[i]);
-	return a;
+    if(a.size()<b.size()) a.resize(b.size(),0);
+    rep(i,0,(int)b.size()-1) a[i]=Msub(a[i],b[i]);
+    return a;
 } 
 poly operator -(const poly &a,const poly &b) {auto c=a; return c-=b;}
 poly& operator *=(poly &a,const poly &b)
@@ -134,9 +153,8 @@ poly& operator *=(poly &a,const poly &b)
         rep(i,0,(int)c.size()-1) rep(j,0,(int)b.size()-1) a[i+j]=(a[i+j]+1ll*c[i]*b[j])%mod;
     } 
     else a=ntt.conv(a,b);
-	return a;
+    return a;
 }
-
 poly operator *(const poly &a,const poly &b) {auto c=a; return c*=b;}
 poly& operator /=(poly &a,const poly &b)
 {
@@ -185,14 +203,12 @@ poly divxk(const poly &a,int k) // reutrn a / x^k
     return poly(a.begin()+k,a.end());
 }
 
-// return the coefficient of x^k in P/Q, where the constant term in Q should be 1.
-int kth_coeff(poly P,poly Q,int k) 
+// input: 
+// A[0], ..., A[d-1] are given,
+// A[i] = \sum_{j=1}^d A[i-j]*c[j], 
+// Q = [-c[d], -c[d-1], ..., -c[1], 1].
+int k_th_linear_regression_helper(poly A,poly Q,ll k)
 {
-    int n=P.size()-1,m=Q.size()-1;
-    auto A=Q; A.resize(n+m+1);
-    A=P*ntt.inverse(A); A.resize(n+m+1);
-    if(k<=n+m) return A[k];
-    reverse(Q.begin(),Q.end());
     auto qp=[](poly a,ll k,poly Q) {
         poly res{1};
         while(k)
@@ -203,11 +219,34 @@ int kth_coeff(poly P,poly Q,int k)
         }
         return res;
     };
-    k-=n;
     auto res=qp(poly{0,1},k,Q);
     int ans=0;
-    rep(i,0,m-1) ans=(ans+1ll*A[i+n]*res[i])%mod;
+    rep(i,0,sz(A)-1) ans=(ans+1ll*A[i]*res[i])%mod;
     return ans;
+}
+
+// input: 
+// A[0], ..., A[d-1] are given,
+// A[i] = \sum_{j=1}^d A[i-j]*C[j]. 
+// Note that C should have size of d+1.
+int k_th_linear_regression(poly A,poly C,ll k)
+{
+    int d=A.size();
+    if(k<d) return A[k];
+    reverse(all(C));
+    rep(i,0,d-1) C[i]=(mod-C[i])%mod;
+    C[d]=1;
+    return k_th_linear_regression_helper(A,C,k);
+}
+// return the coefficient of x^k in P/Q, where the constant term in Q should be 1.
+int kth_coeff(poly P,poly Q,ll k) 
+{
+    int d=Q.size()-1,N=max(sz(P),sz(Q));
+    auto A=Q; A.resize(N);
+    A=P*ntt.inverse(A); A.resize(N);
+    if(k<N) return A[k];
+    reverse(Q.begin(),Q.end());
+    return k_th_linear_regression_helper(poly(A.end()-d,A.end()),Q,k-N+d);
 }
 
 // CDQ D&C:

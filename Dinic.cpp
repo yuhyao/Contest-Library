@@ -1,12 +1,6 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 200
-#define inf 0x3f3f3f3f
-using namespace std;
-
+//vertices: 1 ... n.
 typedef int flow_t;
 const flow_t MF = inf;
-
 struct E
 {
     int u,v; flow_t c;
@@ -17,8 +11,7 @@ struct E
 vector<E> e;
 vi to[maxn+5];
 
-int d[maxn+5],src,sink,cur[maxn+5];
-
+int d[maxn+5],cur[maxn+5],src,sink;
 void add(int u,int v,flow_t c)
 {
     to[u].pb(e.size()); e.pb(E(u,v,c));
@@ -73,9 +66,4 @@ flow_t maxflow(int n)
         flow+=dfs(src,MF);
     }
     return flow;
-}
-
-int main()
-{
-    return 0;
 }

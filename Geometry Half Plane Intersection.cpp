@@ -1,28 +1,18 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define per(i,a,n) for(int i=n;i>=a;i--)
-#define pb push_back
-#define maxn 100000
-using namespace std;
-typedef double db;
-
 const db eps=1e-9;
 const db pi=acos(-1.0);
 int sgn(db x) {return (x>eps)-(x<-eps);}
 int cmp(db x,db y) {return sgn(x-y);}
-
 struct P
 {
     db x,y;
     P():x(0),y(0){}
     P(db a,db b):x(a),y(b){}
     void in() {scanf("%lf%lf",&x,&y);}
-    P operator +(const P &a) const {return P(x+a.x,y+a.y);}
-    P operator -(const P &a) const {return P(x-a.x,y-a.y);}
-    P operator *(const db &a) const {return P(x*a,y*a);}
-    P operator /(const db &a) const {return P(x/a,y/a);}
+    P operator + (const P &a) const {return P(x+a.x,y+a.y);}
+    P operator - (const P &a) const {return P(x-a.x,y-a.y);}
+    P operator * (const db &a) const {return P(x*a,y*a);}
+    P operator / (const db &a) const {return P(x/a,y/a);}
     db norm() {return sqrt(x*x+y*y);}
-    db norm2() {return x*x+y*y;}
 };
 typedef vector<P> vp;
 
@@ -37,10 +27,11 @@ struct L
     L(){}
     L(P x,P y):a(x),b(y){get_angle();}
 };
-//规定左侧为内侧（即逆时针）
+// LHS <-> inside (i.e. counter clockwise)
 bool onleft(L l,P p) {return cross(l.b-l.a,p-l.a)>eps;}
 bool onright(L l,P p) {return cross(l.b-l.a,p-l.a)<-eps;}
-//注意这个求交点没有考虑直线平行，要在外面考虑
+
+// Note that we assume l1 and l2 are not parallel.
 P lcross(L l1,L l2)
 {
     db s1=cross(l1.a-l2.a,l2.b-l2.a);
@@ -55,7 +46,7 @@ vp HPI(vector<L> l)
     vector<L> q(n);
     sort(l.begin(),l.end(),[](L s1,L s2)
     {
-        //先按极角排序，极角相等，内侧靠前
+        // sort according to the angle.
         if(cmp(s1.angle,s2.angle)!=0) return s1.angle<s2.angle;
         return onleft(s2,s1.b);
     });
@@ -79,9 +70,4 @@ vp HPI(vector<L> l)
     rep(i,front,rear-1) res.pb(lcross(q[i],q[i+1]));
     if(rear-front>1) res.pb(lcross(q[front],q[rear]));
     return res;
-}
-
-int main()
-{
-    return 0;
 }

@@ -7,10 +7,7 @@ template<class T> struct BIT
         n=_n;
         rep(i,1,n) a[i]=0;
     }
-    void add(int i,T x)
-    {
-        for(;i<=n;i+=i&-i) a[i]+=x;
-    }
+    void add(int i,T x) {for(;i<=n;i+=i&-i) a[i]+=x;}
     T ask(int i)
     {
         T ans=0;
@@ -19,15 +16,15 @@ template<class T> struct BIT
     }
     void add(int l,int r,T x) {add(l,x); add(r+1,-x);}
     T ask(int l,int r) {return ask(r)-ask(l-1);}
-    int find(T x) // find the least number pos such that a[pos] + pos >= x.
+    int find(T x) // find the first pos such that ask(pos) + pos >= x.
     {
         int pos=0;
-        per(i,0,31-__builtin_clz(n)) // log_2(n) = 31 - __builtin_clz(n)
+        per(i,0,__lg(n))
         {
             if((pos | (1<<i)) <= n && a[pos | (1<<i)] + (pos | (1<<i)) < x) 
             {
-                pos|=1<<i;
-                x-=a[pos];
+                pos |= 1<<i;
+                x -= a[pos];
             }
         }
         return pos+1;

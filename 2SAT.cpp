@@ -35,9 +35,9 @@ struct _2sat_solver
             if(dfn[v]==0)
             {
                 tarjan(v);
-                low[now]=min(low[now],low[v]);
+                chmin(low[now],low[v]);
             }
-            else if(scc[v]==0) low[now]=min(low[now],dfn[v]);
+            else if(scc[v]==0) chmin(low[now],dfn[v]);
         }
         if(low[now]==dfn[now])
         {

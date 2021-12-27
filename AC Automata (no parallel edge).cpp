@@ -1,4 +1,4 @@
-struct AC
+struct Aho_Corasick
 {
     #define C 26
     int next[maxn+5][C],fail[maxn+5],cnt[maxn+5];

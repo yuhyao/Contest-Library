@@ -1,12 +1,4 @@
-#include "bits/stdc++.h"
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define per(i,a,n) for(int i=n;i>=a;i--)
-#define pb push_back
-#define maxn 600000
-using namespace std;
-typedef vector<int> vi;
-
-struct hopcroft
+struct Hopcroft
 {
     // indices start from 1.
     int n1,n2; // n1=size of X, n2=size of Y.
@@ -18,7 +10,7 @@ struct hopcroft
     
     void init(int _n1,int _n2)
     {
-        n1=_n1,n2=_n2;
+        n1=_n1, n2=_n2;
         rep(i,1,n1) e[i].clear();
     }
 

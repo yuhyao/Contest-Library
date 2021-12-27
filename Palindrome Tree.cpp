@@ -1,13 +1,8 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define per(i,a,n) for(int i=n;i>=a;i--)
-#define maxn 300000
-using namespace std;
-typedef long long ll;
-ll ans=0;
 struct Palin_tree
 {
-    char s[maxn+5];//idx starts from 1.
+    char s[maxn+5]; // idx starts from 1.
+    // cnt -> number of occurrence of a palindrome substring.
+    // len -> length of a palindrome substring.
     int nxt[maxn+5][26],fail[maxn+5],len[maxn+5],cnt[maxn+5];
     int tot,last;
     int newnode(int l)
@@ -42,21 +37,11 @@ struct Palin_tree
         cnt[p]++;
         return last=p;
     }
-    void cal()
+    ll cal()
     {
+        ll ans=0;
         per(i,2,tot-1) cnt[fail[i]]+=cnt[i];
         rep(i,2,tot-1) ans=max(ans,1ll*len[i]*cnt[i]);
+        return ans;
     }
 }pt;
-
-int main()
-{
-    pt.init();
-    scanf("%s",pt.s+1);
-    int n=strlen(pt.s+1);
-    rep(i,1,n) pt.ins(i);
-    ans=0;
-    pt.cal();
-    printf("%lld\n",ans);
-    return 0;
-}

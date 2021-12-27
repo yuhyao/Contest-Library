@@ -1,10 +1,7 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 100000
-using namespace std;
+// indices start from 0!
 char Ma[maxn*2+5],s[maxn+5];
 int Mp[maxn*2+5];
-int manacher(char* s)//返回s中最长回文子串的长度。
+int manacher(char* s) // returns the length of the longest palindrome substring.
 {
     int l=0,n=strlen(s);
     Ma[l++]='$';
@@ -29,9 +26,4 @@ int manacher(char* s)//返回s中最长回文子串的长度。
     int ans=0;
     rep(i,0,2*n+1) ans=max(ans,Mp[i]-1);
     return ans;
-}
-int main()
-{
-    while(~scanf("%s",s)) printf("%d\n",manacher(s));
-    return 0;
 }

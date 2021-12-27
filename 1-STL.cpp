@@ -96,7 +96,7 @@ void BITSET()
     x=bit.any();//返回bit中是否有1
     x=bit.none();//返回bit中是否全0
     string s=bit.to_string();
-    for(int j=bit._Find_first();j!=bit.size();j=bit._Find_next(j));
+    for(int j=bit._Find_first();j!=sz(bit);j=bit._Find_next(j));
 }
 void PBDS()
 {
@@ -108,8 +108,8 @@ void PBDS()
     S.insert(2); //insert integer 2.
     printf("%d\n",(int)S.order_of_key(1)); //ask the number of elements in S which are greater than 1.
     printf("%d\n",*S.find_by_order(i)); //ask the i-th biggest element in S. i starts form 0.
-	
-	gp_hash_table<int,int> HT;
+
+    gp_hash_table<int,int> HT;
 }
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());

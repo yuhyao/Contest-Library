@@ -1,10 +1,4 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 1000000
-#define mod 1000000007
-using namespace std;
-char s1[maxn+5],s2[maxn*2+5];
-int lcp[maxn+5],extend[maxn*2+5];
+int lcp[maxn+5],extend[maxn+5];
 void get_lcp(char* p)
 {
     int m=strlen(p),p0=0,r=-1;
@@ -37,14 +31,4 @@ void get_ext(char* t,char* p)
         }
     }
     return;
-}
-int main()
-{
-    while(~scanf("%s",s1))
-    {
-        get_lcp(s1);
-        int n=strlen(s1);
-        rep(i,0,n-1) printf("%d: %d\n",i,lcp[i]);
-    }
-    return 0;
 }

@@ -1,16 +1,18 @@
 struct LinearSieve
 {
     vi prime;
-    bool np[maxn+5];
-    int d[maxn+5]={0,0},facnum[maxn+5]={1,1},phi[maxn+5]={0,1},mu[maxn+5]={0,1};
+    int minp[maxn+5];
+    array<int,maxn+5> d,facnum,phi,mu;
     void init(int n)
     {
+        facnum[0]=facnum[1]=phi[1]=mu[1]=1;
         prime.clear();
         rep(i,2,n)
         {
-            if(np[i]==0)
+            if(minp[i]==0)
             {
                 prime.pb(i);
+                minp[i]=i;
                 d[i]=1;
                 facnum[i]=2;
                 phi[i]=i-1;
@@ -20,7 +22,7 @@ struct LinearSieve
             {
                 ll v=1ll*i*p;
                 if(v>n) break;
-                np[v]=1;
+                minp[v]=p;
                 if(i%p==0)
                 {
                     d[v]=d[i]+1;
@@ -36,7 +38,7 @@ struct LinearSieve
             }
         }
     }
-	int calphi(int x)
+    int calphi(int x)
     {
         int tmp=x;
         for(auto p: prime) if(tmp%p==0)

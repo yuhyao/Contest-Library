@@ -1,13 +1,3 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 700
-#define pb push_back
-using namespace std;
-typedef double db;
-const db eps=1e-8;
-const db pi=acos(-1.0);
-int cmp(db x) {return (x>eps)-(x<-eps);}
-
 struct P
 {
     db x,y;
@@ -77,7 +67,7 @@ db cal(int n)
         rep(k,0,l-2)
         {
             b+=vec[k].d;
-            area[b]+=((vec[k+1].angle-vec[k].angle)*R*R-cross(vec[k]-c[i],vec[k+1]-c[i])+cross(vec[k],vec[k+1]))/2.0;
+            area[b] += ((vec[k+1].angle-vec[k].angle)*R*R - cross(vec[k]-c[i],vec[k+1]-c[i]) + cross(vec[k],vec[k+1]))/2.0;
         }
     }
     return area[1];

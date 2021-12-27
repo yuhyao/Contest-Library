@@ -1,8 +1,8 @@
 struct SA
 {
-    int n,sa[maxn+5],rk[maxn+5],h[maxn+5],ps[maxn+5],tmp[maxn+5];
+    array<int,maxn+5> sa, rk, h, ps, tmp;
     char *a;
-    int lg[maxn+5],st[20][maxn+5];
+    int n,st[__lg(maxn)+1][maxn+5];
     void RSort(int n,int m)
     {
         rep(i,0,m) ps[i]=0;
@@ -10,7 +10,7 @@ struct SA
         rep(i,1,m) ps[i]+=ps[i-1];
         per(i,1,n) sa[ps[rk[tmp[i]]]--]=tmp[i];
     }
-    bool cmp(int *f,int x,int y,int w,int n)
+    bool cmp(array<int,maxn+5> &f,int x,int y,int w)
     {
         if(x+w>n || y+w>n) return 0;
         return f[x]==f[y] && f[x+w]==f[y+w];
@@ -21,14 +21,14 @@ struct SA
         for(int i=1,k=0;i<=n;h[rk[i++]]=k)
             for(k=k?k-1:k;a[i+k]==a[sa[rk[i]-1]+k];k++);
         // calculate sparse table for lcp.
-        rep(i,2,n) lg[i]=lg[i>>1]+1;
         rep(j,1,n) st[0][j]=h[j];
-        rep(i,1,lg[n]) rep(j,1,n-(1<<i)+1) st[i][j]=min(st[i-1][j],st[i-1][j+(1<<(i-1))]);
+        rep(i,1,__lg(n)) rep(j,1,n-(1<<i)+1) st[i][j]=min(st[i-1][j],st[i-1][j+(1<<(i-1))]);
     }
-    // index of a starts from 1, characters should be in [0,m].
+    // indices start from 1, characters should be in [1,m].
     void build(char *s,int _n,int m=127) 
     {
         a=s; n=_n;
+        a[n+1]=0; // this is important for cal_height to work.
         rep(i,1,n) rk[i]=a[i];
         rep(i,1,n) tmp[i]=i;
         RSort(n,m);
@@ -40,7 +40,7 @@ struct SA
             RSort(n,m);
             rep(i,1,n) swap(rk[i],tmp[i]);
             rk[sa[1]]=p=1;
-            rep(i,2,n) rk[sa[i]]=cmp(tmp,sa[i],sa[i-1],j,n)?p:++p;
+            rep(i,2,n) rk[sa[i]]=cmp(tmp,sa[i],sa[i-1],j)?p:++p;
         }
         cal_height();
     }
@@ -49,7 +49,7 @@ struct SA
         int l=rk[i],r=rk[j];
         if(l>r) swap(l,r);
         l++;
-        int k=lg[r-l+1];
+        int k=__lg(r-l+1);
         return min(st[k][l],st[k][r-(1<<k)+1]);
     }
 }sa;

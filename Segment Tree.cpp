@@ -1,3 +1,4 @@
+// Range add & range query.
 template<class T> struct Segtree
 {
     #define ls i*2
@@ -31,7 +32,7 @@ template<class T> struct Segtree
             pu(i);
         }
     }
-    void add(int i,int l,int r,int ql,int qr,T x)
+    void add(int i,int l,int r,int ql,int qr,const T &x)
     {
         if(ql<=l && r<=qr)
         {

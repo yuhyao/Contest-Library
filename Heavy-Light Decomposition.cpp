@@ -61,7 +61,6 @@ struct HLD
         if(u==v) return;
         if(dep[u]<dep[v]) swap(u,v);
         seg.add(1,1,n,id[heavy[v]],id[u]);
-        return;
     }
     int ask(int u,int v)
     {

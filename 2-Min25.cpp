@@ -1,9 +1,3 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define maxn 100000
-#define mod 998244353
-using namespace std;
-typedef long long ll;
 ll p[maxn+5];
 int np[maxn+5]={1,1},pi[maxn+5];
 
@@ -30,7 +24,7 @@ void sol(ll n)
         if(val<=sq) id1[val]=++tot;
         else id2[r]=++tot;
         //下面的S[tot] = sum_i^{val} F(i) - F(1)，这里F(i)是指将i当作质数后F(i)的值，比如令F=miu，那么对所有的i>1，我们认为F[i]均是-1。
-        S[tot]=ask(val)-1;
+        S[tot]=ask(val)-ask(1);
         w[tot]=val;
         l=r+1;
     }
@@ -39,7 +33,7 @@ void sol(ll n)
     {
         if(1ll*p[i]*p[i]>w[j]) break;
         int op=(w[j]/p[i]<=sq)?id1[w[j]/p[i]]:id2[n/(w[j]/p[i])];
-        //delta(x)表示把数都当成质数后，F(i*x)/F(i)。
+        // delta(x) 表示把数都当成质数后，F(i*x)/F(i)。
         S[j]=S[j]-delta(p[i])*(S[op]-zh[i-1]);
     }
     per(i,1,m) rep(j,1,tot)
@@ -48,8 +42,7 @@ void sol(ll n)
         for(ll o=p[i],u=w[j]/p[i];o*p[i]<=uu;o=o*p[i],u=u/p[i])
         {
             op=(u<=sq)?id1[u]:id2[n/u];
-            S[j]=S[j]+(S[op]-zh[i])*F(o);
-            S[j]=S[j]+F(o*p[i]);
+            S[j]+=(S[op]-zh[i])*F(o)+F(o*p[i]);
         }
     }
     S[tot+1]=-F(1);//这条语句的存在是因为S中不含F(1)。
@@ -90,13 +83,4 @@ int main()
         }
     }
     rep(i,1,maxn) pi[i]=pi[i-1]+(1-np[i]);
-    
-    int T;
-    scanf("%d",&T);
-    while(T--)
-    {
-        ll n; scanf("%lld",&n);
-        sol(n);
-    }
-    return 0;
 }

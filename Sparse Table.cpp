@@ -1,20 +1,16 @@
 template<class T> struct SparseTable
 {
-    #define LG 20
-    int lg[maxn+5];
-    T st[LG][maxn+5];
+    T st[__lg(maxn)+1][maxn+5];
     T ask(int l,int r)
     {
-        int k=lg[r-l+1];
+        int k=__lg(r-l+1);
         return min(st[k][l],st[k][r-(1<<k)+1]);
     }
     void init(int n,T a[]) // index starts from 1.
     {
-        rep(i,2,n) lg[i]=lg[i>>1]+1;
         rep(i,1,n) st[0][i]=a[i];
-        rep(i,1,lg[n]) rep(j,1,n-(1<<i)+1) st[i][j]=min(st[i-1][j],st[i-1][j+(1<<(i-1))]);
+        rep(i,1,__lg(n)) rep(j,1,n-(1<<i)+1) st[i][j]=min(st[i-1][j],st[i-1][j+(1<<(i-1))]);
     }
-    #undef LG
 };
 
 int st2[MAXN+5][MAXN+5][12][12],lg[maxn+5];

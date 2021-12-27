@@ -1,39 +1,33 @@
-#include<bits/stdc++.h>
-#define rep(i,a,n) for(int i=a;i<=n;i++)
-#define max_fac 1000000
-using namespace std;
-typedef __int128 LL;
-typedef long long ll;
-ll inv[max_fac+5];
-int gcd(int a,int b)
-{
-    return (b==0)?a:gcd(b,a%b);
-}
-int exgcd(int a,int b,int &x,int &y)//保证了|x|<=|b|,|y|<=|a|
+// input: a>=0, b>=0
+// guarantees |x|<=b, |y|<=a if (a>0 or b>0).
+template<class T> T exgcd(T a,T b,T &x,T &y) 
 {
     if(!b) {x=1;y=0;return a;}
-    int G=exgcd(b,a%b,x,y);
-    int tmp=x;
+    T G=exgcd(b,a%b,x,y);
+    T tmp=x;
     x=y;y=tmp-a/b*y;
     return G;
 }
-int CRT(int a[],int m[],int n)//中国剩余定理，n为方程组个数
+// input: m_0, ..., m_{n-1} should be pairwise coprime.
+// output: solution in [0，M)
+// be careful if you need __int128 in multiplication.
+ll CRT(vector<ll> a,vector<ll> m)
 {
-    int M=1,res=0;
-    rep(i,1,n) M*=m[i];
-    rep(i,1,n)
+    ll M=1,res=0;
+    for(auto x: m) M *= x;
+    rep(i,0,sz(a)-1)
     {
-        int Mi=M/m[i],x,y;
+        ll Mi=M/m[i],x,y;
         exgcd(Mi,m[i],x,y);
-        res=(res+1ll*a[i]*Mi%M*x)%M;
+        res = (res + a[i] % m[i] * Mi % M * x) % M;
     }
-    return (res+M)%M;
+    return (res + M) % M;
 }
 
-const int mod=1000000007;
-ll inv2=(mod+1)>>1;
 // Calculate \sum_{i=0}^n floor((a*i+b)/c).
 // Note that n should not be unsigned type.
+const int mod=1000000007;
+ll inv2=(mod+1)>>1;
 ll Euclidean(ll a,ll b,ll c,ll n)
 {
     if(a>=c || b>=c) return (a/c%mod*(n%mod)%mod*((n+1)%mod)%mod*inv2 + (b/c)%mod*((n+1)%mod) + Euclidean(a%c,b%c,c,n))%mod;
@@ -42,10 +36,10 @@ ll Euclidean(ll a,ll b,ll c,ll n)
     return ((n%mod)*(m%mod)%mod-Euclidean(c,c-b-1,a,m-1)+mod)%mod;
 }
 
-int cal_phi(int x)
+ll cal_phi(ll x)
 {
-    int tmp=1;
-    for(int i=2;1ll*i*i<=x;i++)
+    ll tmp=1;
+    for(ll i=2;i*i<=x;i++)
     {
         if(x%i==0) tmp*=i-1,x/=i;
         while(x%i==0) x/=i,tmp*=i;
@@ -53,13 +47,9 @@ int cal_phi(int x)
     if(x>1) tmp*=x-1;
     return tmp;
 }
-void cal_inv(int mod)
+ll inv[maxn+5];
+void cal_inv(int mod,int n) // should have n < mod.
 {
     inv[1]=1;
-    rep(i,2,min(mod-1,max_fac)) inv[i]=inv[mod%i]*(mod-mod/i)%mod;
-}
-
-int main()
-{
-    return 0;
+    rep(i,2,n) inv[i]=inv[mod%i]*(mod-mod/i)%mod;
 }
