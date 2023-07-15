@@ -1,1 +1,19 @@
 .DS_Store
+.cph
+
+#excluding binaries from MacOS
+*.out
+
+# excluding codes under root folder
+/*.cpp
+/*.java
+/*.py
+/*.bat
+
+#excluding specific folders/codes
+old code/
+yosupo libchecker/
+模板from韩雨/
+
+datastruct/segtree-rectangles-union.cpp
+geometry/geometry (full).cpp
