@@ -1,8 +1,11 @@
 .DS_Store
 .cph
 
-#excluding binaries from MacOS
+# excluding binaries from MacOS
 *.out
+
+# excluding files for testing
+*.bin
 
 # excluding codes under root folder
 /*.cpp
@@ -10,7 +13,7 @@
 /*.py
 /*.bat
 
-#excluding specific folders/codes
+# excluding specific folders/codes
 old code/
 yosupo libchecker/
 模板from韩雨/
