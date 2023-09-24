@@ -46,7 +46,7 @@ struct MInt {
 	static unsigned getMod() { return mod; } // ntt need this.
 	/// end-hash
 
-	friend istream &operator >>(istream &is, Z &a) {
+	friend istream& operator >>(istream &is, Z &a) {
 		ll v; is >> v;
 		a = v;
 		return is;

@@ -3,11 +3,11 @@
  * Date: 22-09-27
  * Description: Fenwick Tree.
  */
-template<class T> struct BIT {
+template<class T> struct Fenwick {
 	int n;
 	vector<T> a;
 
-	BIT(int n): n(n), a(n + 1, 0) {}
+	Fenwick(int n): n(n), a(n + 1, 0) {}
 
 	void Add(int i, T x) { 
 		for (++i; i <= n; i += i & -i) a[i] += x;
