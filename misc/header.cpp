@@ -14,7 +14,7 @@ string to_string(const string &s) { return '"' + s + '"'; }
 string to_string(const char *s) { return to_string((string) s); }
 string to_string(char c) { return "'" + string(1, c) + "'"; }
 string to_string(bool x) { return x ? "true" : "false"; }
-template<class A> string to_string(const A &v) {
+template<class A, class T = typename A::value_type> string to_string(const A &v) {
 	bool first = 1;
 	string res = "{";
 	for (const auto &x: v) {
