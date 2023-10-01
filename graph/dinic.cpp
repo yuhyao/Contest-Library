@@ -1,13 +1,12 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-10-23
- * Description: Dinic algorithm for flow graph $G = (V, E)$. You can get a minimum $src-sink$ cut easily. To get such minimum cut, first run $MaxFlow(src, sink)$. Then you can run $getMinCut()$ to obtain a Minimum Cut (vertices in the same part as $src$ are returned).
+ * Date: 23-10-01
+ * Description: Dinic algorithm for flow graph $G = (V, E)$. You can also get a minimum $src-sink$ cut easily.
  * Time: O(|V|^2 |E|) for arbitrary networks. O(|E| \sqrt{|V|}) for bipartite/unit network. O(min{|V|^{2/3}, |E|^{1/2}} |E|) for networks with only unit capacities.
- * Status: tested on https://codeforces.com/gym/103861/problem/H. Seems to be fast enough now.
- *  getDirFlow() and getUndirFlow() are not tested yet.
+ * Status: tested on https://codeforces.com/contest/1082/problem/G, https://codeforces.com/gym/103861/problem/H. Seems to be fast enough now.
+ *  get_dir_flow() and get_undir_flow() are not tested yet.
  */
-
-template<class Cap = int, Cap Cap_MAX = numeric_limits<Cap>::max()>
+template<class Cap = int>
 struct Dinic {
 	int n; /// start-hash
 	struct E { int to; Cap a; }; // Endpoint & Admissible flow.
@@ -17,12 +16,12 @@ struct Dinic {
 
 	Dinic(int n): n(n), g(n) {}
 
-	void addEdge(int u, int v, Cap c, bool dir = 1) {
+	void add_edge(int u, int v, Cap c, bool dir = 1) {
 		g[u].push_back(sz(es)); es.push_back({v, c});
 		g[v].push_back(sz(es)); es.push_back({u, dir ? 0 : c});
 	}
 
-	Cap MaxFlow(int src, int sink) {
+	Cap max_flow(int src, int sink) {
 		auto revbfs = [&]() {
 			dis.assign(n, -1);
 			dis[sink] = 0;
@@ -63,19 +62,20 @@ struct Dinic {
 		Cap ans = 0;
 		while (revbfs()) {
 			cur.assign(n, 0);
-			ans += dfs(dfs, src, Cap_MAX);
+			ans += dfs(dfs, src, numeric_limits<Cap>::max());
 		}
 		return ans;
 	} /// end-hash
 
-	// Returns a min-cut containing the src.
-	vi getMinCut() { /// start-hash
+	// Returns a min-cut containing source src.
+	pair<Cap, vi> min_cut(int src, int sink) { /// start-hash
+		Cap ans = max_flow(src, sink);
 		vi res;
 		rep(i, 0, n - 1) if (dis[i] == -1) res.push_back(i);
-		return res;
+		return make_pair(ans, move(res));
 	} /// end-hash
 
 	// Gives flow on edge assuming it is directed/undirected. Undirected flow is signed.
-	Cap getDirFlow(int i) { return es[i * 2 + 1].a; }
-	Cap getUndirFlow(int i) { return (es[i * 2 + 1].a - es[i * 2].a) / 2; }
+	Cap get_dir_flow(int i) { return es[i * 2 + 1].a; }
+	Cap get_undir_flow(int i) { return (es[i * 2 + 1].a - es[i * 2].a) / 2; }
 };
