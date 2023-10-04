@@ -6,22 +6,22 @@
  * Status: tested on https://codeforces.com/contest/1082/problem/G, https://codeforces.com/gym/103861/problem/H. Seems to be fast enough now.
  *  get_dir_flow() and get_undir_flow() are not tested yet.
  */
-template<class Cap = int>
+template<class flow_t = int>
 struct Dinic {
 	int n; /// start-hash
-	struct E { int to; Cap a; }; // Endpoint & Admissible flow.
+	struct E { int to; flow_t a; }; // Endpoint & Admissible flow.
 	vector<E> es;
 	vector<vi> g;
 	vi dis; // Put it here to get the minimum cut easily.
 
 	Dinic(int n): n(n), g(n) {}
 
-	void add_edge(int u, int v, Cap c, bool dir = 1) {
+	void add_edge(int u, int v, flow_t c, bool dir = 1) {
 		g[u].push_back(sz(es)); es.push_back({v, c});
 		g[v].push_back(sz(es)); es.push_back({u, dir ? 0 : c});
 	}
 
-	Cap max_flow(int src, int sink) {
+	flow_t max_flow(int src, int sink) {
 		auto revbfs = [&]() {
 			dis.assign(n, -1);
 			dis[sink] = 0;
@@ -42,14 +42,14 @@ struct Dinic {
 		};
 
 		vi cur;
-		auto dfs = [&](auto &dfs, int now, Cap flow) {
+		auto dfs = [&](auto &dfs, int now, flow_t flow) {
 			if (now == sink) return flow;
-			Cap res = 0;
+			flow_t res = 0;
 			for (int &ind = cur[now]; ind < sz(g[now]); ind++) {
 				int i = g[now][ind];
 				auto [v, c] = es[i];
 				if (c > 0 && dis[v] == dis[now] - 1) {
-					Cap x = dfs(dfs, v, min(flow - res, c));
+					auto x = dfs(dfs, v, min(flow - res, c));
 					res += x;
 					es[i].a -= x;
 					es[i ^ 1].a += x;
@@ -59,23 +59,23 @@ struct Dinic {
 			return res;
 		};
 		
-		Cap ans = 0;
+		flow_t ans = 0;
 		while (revbfs()) {
 			cur.assign(n, 0);
-			ans += dfs(dfs, src, numeric_limits<Cap>::max());
+			ans += dfs(dfs, src, numeric_limits<flow_t>::max());
 		}
 		return ans;
 	} /// end-hash
 
 	// Returns a min-cut containing source src.
-	pair<Cap, vi> min_cut(int src, int sink) { /// start-hash
-		Cap ans = max_flow(src, sink);
+	pair<flow_t, vi> min_cut(int src, int sink) { /// start-hash
+		auto ans = max_flow(src, sink);
 		vi res;
 		rep(i, 0, n - 1) if (dis[i] == -1) res.push_back(i);
 		return make_pair(ans, move(res));
 	} /// end-hash
 
 	// Gives flow on edge assuming it is directed/undirected. Undirected flow is signed.
-	Cap get_dir_flow(int i) { return es[i * 2 + 1].a; }
-	Cap get_undir_flow(int i) { return (es[i * 2 + 1].a - es[i * 2].a) / 2; }
+	flow_t get_dir_flow(int i) { return es[i * 2 + 1].a; }
+	flow_t get_undir_flow(int i) { return (es[i * 2 + 1].a - es[i * 2].a) / 2; }
 };
