@@ -6,7 +6,7 @@
  *  Combine is set as + operation. If you use your own struct, then please define constructor and + operation.
  *  In constructor, $q$ is the number of $pointApply$ you will use.
  * Usage: Point Add and Range Sum.
- *  void apply(int \&a, int b) { a += b; } // global
+ *  void InfoApply(int \&a, int b) { a += b; } // global
  *  ...
  *  PersistSegtree<int> pseg(10, 1); // N = 10 and 1 update.
  *  int rt = 0; // empty node.
