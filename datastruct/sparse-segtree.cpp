@@ -1,24 +1,24 @@
 /**
  * Author: Yuhao Yao
- * Date: 23-10-28
+ * Date: 24-01-07
  * Description: Dynamic Memory Allocated Segment Tree of range $[0, N - 1]$. Point apply and thus no lazy propogation.
  *  Always define a global $InfoApply$ function to tell segment tree how you apply modification. 
  *  Combine is set as + operation. If you use your own struct, then please define constructor and + operation.
  * Usage: Point Add and Range Sum.
  *  void InfoApply(int \&a, int b) { a += b; } // global
  *  ...
- *  DynamicSegtree<int> seg(1e9); // N = 1e9.
+ *  SparseSegtree<int> seg(1e9); // N = 1e9.
  *  seg.point_apply(100000, 2);
  * Time: O(\log N) per operation.
  * Status: tested on https://qoj.ac/contest/1399/problem/7641.
  */
 template<class Info>
-struct DynamicSegtree {
+struct SparseSegtree {
 	struct node { Info info; int ls, rs; };
 	int n;
 	vector<node> ts;
 	// node 0 is left as virtual empty node.
-	DynamicSegtree(int n): n(n), ts(2) {
+	SparseSegtree(int n): n(n), ts(2) {
 		assert(n > 0);
 	}
 
