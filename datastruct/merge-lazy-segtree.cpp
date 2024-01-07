@@ -1,65 +1,69 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-12-11
- * Description: Merge Lazy Segment Tree. pointApply creates nodes when nodes are missing.
- * Time: O(\log n) for pointApply, rangeApply, rangeAsk; Amortized O(\log n) for Merge.
+ * Date: 24-01-07
+ * Description: Merge Lazy Segment Tree. point\_apply creates nodes when nodes are missing. range\_apply only applies to existing nodes.
+ * Time: O(\log n) for point\_apply, range\_apply, range\_ask; Amortized O(\log n) for Merge.
  * Status: tested on https://codeforces.com/contest/1455/problem/G.
  */
 template<class Info, class Tag>
-class MergeLazySegTreeNode {
-	using node = MergeLazySegTreeNode;
-	node *ls, *rs;
-	Info info;
-	Tag tag;
-public:
-	MergeLazySegTreeNode(): ls(nullptr), rs(nullptr), info(Info{}), tag(Tag{}) {}
-private:
-	void pull() {
-		info = (ls == nullptr ? Info{} : ls->info) + (rs == nullptr ? Info{} : rs->info);
-	}
-	
-	template<class... T>
-	void apply(int l, int r, const T&... val) {
-		InfoApply(info, l, r, val...);
-		TagApply(tag, l, r, val...);
-	}
-
-	void push(int l, int r) {
-		if (tag != Tag{}) {
-			int mid = (l + r) >> 1;
-			if (ls != nullptr) ls->apply(l, mid, tag);
-			if (rs != nullptr) rs->apply(mid + 1, r, tag);
-			tag = {};
+struct MergeLazySegtree {
+	struct node {
+		Info info;
+		Tag tag;
+		unique_ptr<node> ls, rs;
+		node(): info{}, tag{}, ls{}, rs{} {}
+		void pull() {
+			info = (ls ? ls->info : Info{}) + (rs ? rs->info : Info{});
 		}
-	}
-public:
-	friend node* Merge(int n, node *r1, node *r2, function<Info(const Info&, const Info&)> func) {
-		auto dfs = [&](auto &dfs, node *a, node *b, int l, int r) -> node* {
-			if (a == nullptr) return b;
-			if (b == nullptr) return a;
+		template<class... T>
+		void apply(int l, int r, const T&... val) {
+			info_apply(info, l, r, val...);
+			tag_apply(tag, l, r, val...);
+		}
+		void push(int l, int r) {
+			if (tag != Tag{}) {
+				int mid = (l + r) >> 1;
+				if (ls) ls->apply(l, mid, tag);
+				if (rs) rs->apply(mid + 1, r, tag);
+				tag = {};
+			}
+		}
+	};
+	using ptr = unique_ptr<node>;
+	int n;
+	ptr rt;
+
+	MergeLazySegtree(int n) : n(n), rt{} { assert(n > 0); }
+	
+	void join(MergeLazySegtree &rhs, function<Info(const Info&, const Info&)> merge) {
+		auto dfs = [&](auto &dfs, ptr &a, ptr &b, int l, int r) {
+			if (b == nullptr) return;
+			if (a == nullptr) {
+				swap(a, b);
+				return;
+			}
 			if (l == r) {
-				a->info = func(a->info, b->info);
-				delete b;
-				return a;
+				a->info = merge(a->info, b->info);
+				return;
 			}
 			a->push(l, r);
 			b->push(l, r);
 			int mid = (l + r) >> 1;
-			a->ls = dfs(dfs, a->ls, b->ls, l, mid);
-			a->rs = dfs(dfs, a->rs, b->rs, mid + 1, r);
+			dfs(dfs, a->ls, b->ls, l, mid);
+			dfs(dfs, a->rs, b->rs, mid + 1, r);
 			a->pull();
-			delete b;
-			return a;
 		};
-		return dfs(dfs, r1, r2, 0, n - 1);
+		assert(n == rhs.n);
+		dfs(dfs, rt, rhs.rt, 0, n - 1);
+		rhs.rt = nullptr;
 	}
-	// I have to have the argument n in all kinds of Apply and Ask...
+
 	template<class... T>
-	friend void pointApply(node *&t, int n, int p, const T&... val) {
-		auto dfs = [&](auto &dfs, node *&now, int l, int r) -> void {
-			if (now == nullptr) now = new node;
+	void point_apply(int p, const T&... val) {
+		auto dfs = [&](auto &dfs, ptr &now, int l, int r) -> void {
+			if (now == nullptr) now = make_unique<node>();
 			if (l == r) {
-				InfoApply(now->info, val...);
+				info_apply(now->info, val...);
 				return;
 			}
 			now->push(l, r);
@@ -68,12 +72,12 @@ public:
 			else dfs(dfs, now->rs, mid + 1, r);
 			now->pull();
 		};
-		dfs(dfs, t, 0, n - 1);
+		dfs(dfs, rt, 0, n - 1);
 	}
 
 	template<class... T>
-	void rangeApply(int n, int ql, int qr, const T&... val) {
-		auto dfs = [&](auto &dfs, node *now, int l, int r) -> void {
+	void range_apply(int ql, int qr, const T&... val) {
+		auto dfs = [&](auto &dfs, ptr &now, int l, int r) -> void {
 			if (qr < l || r < ql || now == nullptr) return;
 			if (ql <= l && r <= qr) {
 				now->apply(l, r, val...);
@@ -85,12 +89,12 @@ public:
 			dfs(dfs, now->rs, mid + 1, r);
 			now->pull();
 		};
-		dfs(dfs, this, 0, n - 1);
+		dfs(dfs, rt, 0, n - 1);
 	}
 
-	Info rangeAsk(int n, int ql, int qr) {
+	Info range_ask(int ql, int qr) {
 		Info res{};
-		auto dfs = [&](auto &dfs, node *now, int l, int r) -> void {
+		auto dfs = [&](auto &dfs, ptr &now, int l, int r) -> void {
 			if (qr < l || r < ql || now == nullptr) return;
 			if (ql <= l && r <= qr) {
 				res = res + now->info;
@@ -101,7 +105,7 @@ public:
 			dfs(dfs, now->ls, l, mid);
 			dfs(dfs, now->rs, mid + 1, r);
 		};
-		dfs(dfs, this, 0, n - 1);
+		dfs(dfs, rt, 0, n - 1);
 		return res;
 	}
 };

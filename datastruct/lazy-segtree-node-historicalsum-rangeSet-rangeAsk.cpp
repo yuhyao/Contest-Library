@@ -17,7 +17,7 @@ struct Mat {
 	friend bool operator ==(const Mat &lhs, const Mat &rhs) {
 		return lhs.v10 == rhs.v10 && lhs.v11 == rhs.v11 && lhs.v20 == rhs.v20 && lhs.v21 == rhs.v21;
 	}
-	friend void TagApply(Mat &cur, int l, int r, const Mat &x) {
+	friend void tag_apply(Mat &cur, int l, int r, const Mat &x) {
 		Mat res{};
 		res.v10 = cur.v10 + cur.v11 * x.v10;
 		res.v11 = cur.v11 * x.v11;
@@ -37,11 +37,11 @@ struct Vec {
 		res.v1 = lhs.v1 + rhs.v1;
 		return res;
 	}
-	void Apply(T len, const Mat<T> &x) {
+	void apply(T len, const Mat<T> &x) {
 		v0 = v0 + v1 * x.v10 + len * x.v20;
 		v1 = v1 * x.v11 + len * x.v21;
 	}
-	friend void InfoApply(Vec &cur, int l, int r, const Mat<T> &x) { cur.Apply(r - l + 1, x); }
-	friend void InfoApply(Vec &cur, const Mat<T> &x) { cur.Apply(1, x); }
-	T getVal(int t) const { return v1 * T(t) + v0; }
+	friend void info_apply(Vec &cur, int l, int r, const Mat<T> &x) { cur.apply(r - l + 1, x); }
+	friend void info_apply(Vec &cur, const Mat<T> &x) { cur.apply(1, x); }
+	T get_val(int t) const { return v1 * T(t) + v0; }
 };

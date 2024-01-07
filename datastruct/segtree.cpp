@@ -1,13 +1,14 @@
 /**
  * Author: Yuhao Yao
- * Date: 23-04-08
+ * Date: 24-01-08
  * Description: Segment tree. Point apply and thus no lazy propogation.
- * Usage: Always define a InfoApply function for class $Info$ you use to tell segment tree how you apply modification.
+ * Usage: Always define a info\_apply function for class $Info$ you use to tell segment tree how you apply modification.
  *  Combine is set as plus so if you just let T be numerical type then you have range sum in the info and as range query result. To have something different, say rangeMin, define a struct with constructer and + operation.
  * Time: O(\log N) per operation.
  * Status: tested on https://qoj.ac/contest/695/problem/1856, https://codeforces.com/gym/411278/problem/G.
  */
-template<class Info> struct Segtree {
+template<class Info>
+struct Segtree {
 	#define ls i * 2
 	#define rs i * 2 + 1
 
@@ -35,10 +36,10 @@ private:
 	void pull(int i) { info[i] = info[ls] + info[rs]; }
 public:
 	template<class... T>
-	void pointApply(int p, const T&... val) {
+	void point_apply(int p, const T&... val) {
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (l == r) {
-				InfoApply(info[i], val...);
+				info_apply(info[i], val...);
 				return;
 			}
 			int mid = (l + r) >> 1;
@@ -48,7 +49,7 @@ public:
 		};
 		dfs(dfs, 1, 0, n - 1);
 	}
-	Info rangeAsk(int ql, int qr) {
+	Info range_ask(int ql, int qr) {
 		Info res{};
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql) return;
@@ -63,7 +64,7 @@ public:
 		dfs(dfs, 1, 0, n - 1);
 		return res;
 	}
-	int findFirst(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_first(int ql, int qr, function<bool(const Info&, int, int)> func) {
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(info[i], l, r) == 0)) return -1;
 			if (l == r) return l;
@@ -75,7 +76,7 @@ public:
 		};
 		return dfs(dfs, 1, 0, n - 1);
 	};
-	int findLast(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_last(int ql, int qr, function<bool(const Info&, int, int)> func) {
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(info[i], l, r) == 0)) return -1;
 			if (l == r) return l;

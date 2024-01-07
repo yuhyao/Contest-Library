@@ -1,13 +1,14 @@
 /**
  * Author: Yuhao Yao
- * Date: 23-04-01
+ * Date: 24-01-07
  * Description: Segment tree with lazy propogation.
- * Usage: Always define functions \textbf{InfoApply} and \textbf{TagApply} to tell segment tree how you apply modification.
+ * Usage: Always define functions \textbf{info\_apply} and \textbf{tag\_apply} to tell segment tree how you apply modification.
  *  Combine is set as plus so if you just let T be numerical type then you have range sum in the info and as range query result. To have something different, say rangeMin, define a struct with constructer and + operation.
  * Time: O(\log N) per operation.
  * Status: tested on https://codeforces.com/gym/103371/problem/M.
  */
-template<class Info, class Tag> class LazySegTree {
+template<class Info, class Tag>
+class LazySegTree {
 	#define ls i * 2
 	#define rs i * 2 + 1
 
@@ -38,8 +39,8 @@ private:
 
 	template<class... T>
 	void apply(int i, int l, int r, const T&... val) {
-		InfoApply(info[i], l, r, val...);
-		TagApply(tag[i], l, r, val...);
+		info_apply(info[i], l, r, val...);
+		tag_apply(tag[i], l, r, val...);
 	}
 
 	void push(int i, int l, int r) {
@@ -51,7 +52,7 @@ private:
 	}
 public:
 	template<class... T>
-	void rangeApply(int ql, int qr, const T&... val) {
+	void range_apply(int ql, int qr, const T&... val) {
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql) return;
 			if (ql <= l && r <= qr) {
@@ -67,7 +68,7 @@ public:
 		dfs(dfs, 1, 0, n - 1);
 	}
 
-	Info rangeAsk(int ql, int qr) {
+	Info range_ask(int ql, int qr) {
 		Info res{};
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql) return;
@@ -84,7 +85,7 @@ public:
 		return res;
 	}
 
-	int findFirst(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_first(int ql, int qr, function<bool(const Info&, int, int)> func) {
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(info[i], l, r) == 0)) return -1;
 			if (l == r) return l;
@@ -98,7 +99,7 @@ public:
 		return dfs(dfs, 1, 0, n - 1);
 	};
 
-	int findLast(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_last(int ql, int qr, function<bool(const Info&, int, int)> func) {
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(info[i], l, r) == 0)) return -1;
 			if (l == r) return l;

@@ -1,17 +1,17 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-10-23
+ * Date: 24-01-08
  * Description: Persistent Segment Tree of range $[0, N - 1]$. Point apply and thus no lazy propogation.
- *  Always define a global $InfoApply$ function to tell segment tree how you apply modification. 
+ *  Always define a global $info\_apply$ function to tell segment tree how you apply modification. 
  *  Combine is set as + operation. If you use your own struct, then please define constructor and + operation.
- *  In constructor, $q$ is the number of $pointApply$ you will use.
+ *  In constructor, $q$ is the number of $point\_apply$ you will use.
  * Usage: Point Add and Range Sum.
  *  void InfoApply(int \&a, int b) { a += b; } // global
  *  ...
  *  PersistSegtree<int> pseg(10, 1); // N = 10 and 1 update.
  *  int rt = 0; // empty node.
- *  int new_rt = pseg.pointApply(rt, 9, 1); // add 1 to last position (position 9).
- *  int sum = pseg.rangeAsk(new_rt, 7, 9); // ask the sum between position 7 and 9, wrt version new_rt.
+ *  int new_rt = pseg.point\_apply(rt, 9, 1); // add 1 to last position (position 9).
+ *  int sum = pseg.range\_ask(new_rt, 7, 9); // ask the sum between position 7 and 9, wrt version new_rt.
  * Time: O(\log N) per operation.
  * Status: tested on https://codeforces.com/contest/1479/problem/D, https://www.luogu.com.cn/problem/P7361, https://www.luogu.com.cn/problem/P4094.
  */
@@ -28,7 +28,7 @@ struct PersistSegtree {
 
 	// pointApply returns the id of new root.
 	template<class... T>
-	int pointApply(int rt, int pos, const T&... val) {
+	int point_apply(int rt, int pos, const T&... val) {
 		auto dfs = [&](auto &dfs, int &i, int l, int r) {
 			t.push_back(t[i]);
 			i = sz(t) - 1;
@@ -46,7 +46,7 @@ struct PersistSegtree {
 		return rt;
 	}
 
-	Info rangeAsk(int rt, int ql, int qr) {
+	Info range_ask(int rt, int ql, int qr) {
 		Info res{};
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (i == 0 || qr < l || r < ql) return;

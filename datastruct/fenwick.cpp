@@ -1,34 +1,35 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-09-27
+ * Date: 24-01-07
  * Description: Fenwick Tree.
  */
-template<class T> struct Fenwick {
+template<class T>
+struct Fenwick {
 	int n;
-	vector<T> a;
+	vector<T> as;
 
-	Fenwick(int n): n(n), a(n + 1, 0) {}
+	Fenwick(int n): n(n), as(n + 1, 0) {}
 
-	void Add(int i, T x) { 
-		for (++i; i <= n; i += i & -i) a[i] += x;
+	void add(int i, T x) { 
+		for (i++; i <= n; i += i & -i) as[i] += x;
 	}
 
-	T Ask(int i) {
+	T ask(int i) {
 		T ans{};
-		for (++i; i; i -= i & -i) ans += a[i];
+		for (i++; i; i -= i & -i) ans += as[i];
 		return ans;
 	}
 
-	T rangeAsk(int l, int r) { return Ask(r) - Ask(l - 1); }
+	T range_ask(int l, int r) { return ask(r) - ask(l - 1); }
 
 	// assuming prefix sums are non-decreasing, finds the first pos such that ask(pos) >= x.
 	int lower_bound(T x) {
 		assert(n > 0);
 		int pos = 0;
 		for (int h = 1 << __lg(n); h; h >>= 1) {
-			if ((pos | h) <= n && a[pos | h] < x) {
+			if ((pos | h) <= n && as[pos | h] < x) {
 				pos |= h;
-				x -= a[pos];
+				x -= as[pos];
 			}
 		}
 		return pos;

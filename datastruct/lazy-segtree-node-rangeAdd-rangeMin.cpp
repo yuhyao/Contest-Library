@@ -6,12 +6,12 @@ struct Info {
 	friend Info operator +(const Info &a, const Info &b) {
 		return a.val < b.val ? a : b;
 	}
-	friend void InfoApply(Info &cur, int l, int r, const T &x) {
+	friend void info_apply(Info &cur, int l, int r, const T &x) {
 		cur.val += x;
 	}
 };
 
 template<class T> 
-void TagApply(T &cur, int l, int r, const T &x) {
+void tag_apply(T &cur, int l, int r, const T &x) {
 	cur += x;
 }
