@@ -3,8 +3,8 @@
  * Date: 22-10-25
  * Description: Heavy Light Decomposition for a rooted tree $T$. The root is set as $0$ by default. It can be modified easily for forest.
  *  $g$ should be the adjacent list of the tree $T$.
- *  $chainApply(u, v, func, val)$ and $chainAsk(u, v, func)$ are used for apply / query on the simple path from $u$ to $v$ on tree $T$. $func$ is the function you want to use to apply / query on a interval. (Say rangeApply / rangeAsk of Segment tree.)
- * Time: O(|T|) for building. O(\log |T|) for lca. O(\log |T| \cdot A) for chainApply / chainAsk, where $A$ is the running time of $func$ in chainApply / chainAsk.
+ *  $chain_\apply(u, v, func, val)$ and $chain\_ask(u, v, func)$ are used for apply / query on the simple path from $u$ to $v$ on tree $T$. $func$ is the function you want to use to apply / query on a interval. (Say rangeApply / rangeAsk of Segment tree.)
+ * Time: O(|T|) for building. O(\log |T|) for lca. O(\log |T| \cdot A) for chain\_apply / chain\_ask, where $A$ is the running time of $func$ in chain\_apply / chain\_ask.
  * Status: tested on https://codeforces.com/contest/487/problem/E.
  */
 struct HLD {
@@ -51,7 +51,7 @@ struct HLD {
 	} /// end-hash
 
 	template<class... T> /// start-hash
-	void chainApply(int u, int v, const function<void(int, int, T...)> &func, const T&... val) {
+	void chain_apply(int u, int v, const function<void(int, int, T...)> &func, const T&... val) {
 		int f1 = top[u], f2 = top[v];
 		while (f1 != f2) {
 			if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
@@ -63,7 +63,7 @@ struct HLD {
 	} /// end-hash
 
 	template<class T> /// start-hash
-	T chainAsk(int u, int v, const function<T(int, int)> &func) {
+	T chain_ask(int u, int v, const function<T(int, int)> &func) {
 		int f1 = top[u], f2 = top[v];
 		T ans{};
 		while (f1 != f2) {

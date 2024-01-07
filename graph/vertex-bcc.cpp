@@ -1,6 +1,6 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-10-24
+ * Date: 24-01-08
  * Description: Compute the Vertex-BiConnected Components of a graph $G = (V, E)$ (not necessarily connected). 
  *  Multiple edges and self loops are allowed.
  *  $id[i]$ records the index of bcc the $i$-th edge is in.
@@ -62,12 +62,12 @@ struct VertexBCC {
 		}
 	} /// end-hash
 	
-	bool SameBcc(int x, int y) { /// start-hash
+	bool same_bcc(int x, int y) { /// start-hash
 		if (x == fa[top[y]] || y == fa[top[x]]) return 1;
 		else return top[x] == top[y];
 	} /// end-hash
 	
-	vector<vi> getBlockForest() { /// start-hash
+	vector<vi> get_block_forest() { /// start-hash
 		vector<vi> g(n + bcc);
 		for (auto [x, y]: bf) {
 			g[x].push_back(y);

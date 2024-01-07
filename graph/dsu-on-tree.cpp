@@ -23,8 +23,8 @@ void DsuOnTree(const vector<vi> &g, function<void(int)> add, function<void(int)>
 		ids[dfn++] = now;
 		
 		int mx = 0, hv = -1;
-		for (auto v: g[now]) if (v != fa && mx < siz[v]) { mx = siz[v]; hv = v; }
-		for (auto v: g[now]) if (v != fa && v != hv) dfs(dfs, v, now, false);
+		for (auto v : g[now]) if (v != fa && mx < siz[v]) { mx = siz[v]; hv = v; }
+		for (auto v : g[now]) if (v != fa && v != hv) dfs(dfs, v, now, false);
 		if (hv != -1) dfs(dfs, hv, now, true);
 		tout[now] = dfn - 1;
 

@@ -1,12 +1,11 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-10-24
+ * Date: 24-01-08
  * Description: For an edge set $E$ such that each vertex has an even degree, compute Euler tour for each connected component. $dir$ indicates edges are directed or not (undirected by default). For undirected graph, $ori[i]$ records the orientation of the $i$-th edge $es[i] = (x, y)$, where $ori[i] = 1$ means $x \to y$ and $ori[i] = -1$ means $y \to x$.
  *  Note that this is a non-recursive implementation, which avoids stack size issue on some OJ and also saves memory (roughly saves 2/3 of memory) due to that.
  * Time: $O(|V| + |E|)$.
  * Status: tested on https://acm.hdu.edu.cn/showproblem.php?pid=7261, https://ac.nowcoder.com/acm/contest/4010/H.
  */
-
 struct EulerTour {
 	int n;
 	vector<vi> tours;
@@ -55,7 +54,7 @@ struct EulerTour {
 		}
 	}
 
-	vector<vi> getTours() { return tours; }
+	vector<vi> get_tours() { return tours; }
 
-	vi getOrient() { return ori; }
+	vi get_orient() { return ori; }
 };

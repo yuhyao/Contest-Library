@@ -1,11 +1,10 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-09-09
+ * Date: 24-01-08
  * Description: For an edge set $E$ such that each vertex has an even degree, compute Euler tour for each connected component.
  * Time: $O(|V| + |E|)$.
  * Status: tested on https://codeforces.com/problemset/problem/325/E, https://ac.nowcoder.com/acm/contest/4010/H.
  */
-
 struct EulerTour {
 	int n; 
 	vector<vi> tours;
@@ -43,7 +42,7 @@ struct EulerTour {
 		}
 	}
 
-	vector<vi> getTours() { return tours; }
+	vector<vi> get_tours() { return tours; }
 
-	vi getOrient() { return ori; }
+	vi get_orient() { return ori; }
 };

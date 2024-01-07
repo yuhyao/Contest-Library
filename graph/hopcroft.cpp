@@ -1,6 +1,6 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-10-23
+ * Date: 24-01-08
  * Description: Fast bipartite matching for \textbf{bipartite} graph $G = (L \cup R, E)$. Edges $E$ should be described as pairs such that pair $(x, y)$ means that there is an edge between the $x$-th vertex in $L$ and the $y$-th vertex in $R$. You can also get a vertex cover of a bipartite graph easily. 
  * Time: O(|E| \sqrt{|L| + |R|}).
  * Status: vertex cover correctness is tested on https://ac.nowcoder.com/acm/contest/885/F.
@@ -52,7 +52,7 @@ struct Hopcroft {
 		}
 	} /// end-hash
 	
-	vi getMatch() { return lm; } // returns lm.
+	vi get_match() { return lm; } // returns lm.
 
 	pair<vi, vi> vertex_cover() { /// start-hash
 		vi lvc, rvc;
