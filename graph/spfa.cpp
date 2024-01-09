@@ -16,7 +16,7 @@ vector<T> spfa(const vector<vector<pair<int, T>>> &g, int src) {
 	while (sz(que)) {
 		int now = que[0]; que.pop_front();
 		in[now] = 0;
-		for (auto [v, w]: g[now]) if (dis[v] > dis[now] + w) {
+		for (auto [v, w] : g[now]) if (dis[v] > dis[now] + w) {
 			dis[v] = dis[now] + w;
 			if (in[v] == 0) {
 				in[v] = 1;

@@ -9,8 +9,8 @@
  
  #include "linear-base.cpp"
 template<int d, class T = bitset<d * 2>> 
-LB<d, T> intersect(LB<d, T> a, const LB<d, T> &b) {
-	LB<d, T> res;
+LinearBase<d, T> intersect(LinearBase<d, T> a, const LinearBase<d, T> &b) {
+	LinearBase<d, T> res;
 	rep(i, 0, d - 1) if (a[i] != 0) a[i][d + i] = 1;
 	T msk(string(d, '1'));
 	rep(i, 0, d - 1) {

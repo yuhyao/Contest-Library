@@ -18,7 +18,7 @@ struct SparseSegtree {
 	int n;
 	vector<node> ts;
 	// node 0 is left as virtual empty node.
-	SparseSegtree(int n): n(n), ts(2) {
+	SparseSegtree(int n) : n(n), ts(2) {
 		assert(n > 0);
 	}
 

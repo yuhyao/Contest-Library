@@ -7,7 +7,7 @@
 struct LinkedList {
 	int n;
 	vi pre, nxt;
-	LinkedList(int n): pre(n), nxt(n) {
+	LinkedList(int n) : pre(n), nxt(n) {
 		iota(all(pre), -1);
 		iota(all(nxt), 1);
 	}

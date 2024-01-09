@@ -49,7 +49,7 @@ vector<pii> Hungarian(const vector<vector<T>> &ws) {
 				rep(j, 0, R - 1) if (sa[j]) d = min(d, sa[j]);
 				
 				bool found = 0;
-				for (auto i: que) lp[i] += d;
+				for (auto i : que) lp[i] += d;
 				rep(j, 0, R - 1) {
 					if (sa[j]) {
 						sa[j] -= d;

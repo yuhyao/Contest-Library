@@ -10,7 +10,7 @@ struct MergeSegtree {
 	struct node {
 		Info info;
 		unique_ptr<node> ls, rs;
-		node(): info{}, ls{}, rs{} {}
+		node() : info{}, ls{}, rs{} {}
 		void pull() {
 			info = (ls ? ls->info : Info{}) + (rs ? rs->info : Info{});
 		}
@@ -19,7 +19,7 @@ struct MergeSegtree {
 	int n;
 	ptr rt;
 
-	MergeSegtree(int n): n(n), rt{} { assert(n > 0); }
+	MergeSegtree(int n) : n(n), rt{} { assert(n > 0); }
 
 	void join(MergeSegtree &rhs, function<Info(const Info&, const Info&)> merge) { // t2 will be empty after merge.
 		auto dfs = [&](auto &dfs, ptr &a, ptr &b, int l, int r) -> void {

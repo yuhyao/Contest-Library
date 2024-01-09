@@ -10,7 +10,7 @@ struct Hopcroft {
 	vi lm, rm; // record the matched vertex for each vertex on both sides.
 	vi ldis, rdis; // put it here so you can get vertex cover easily.
 
-	Hopcroft(int L, int R, const vector<pii> &es): L(L), R(R), lm(L, -1), rm(R, -1) {
+	Hopcroft(int L, int R, const vector<pii> &es) : L(L), R(R), lm(L, -1), rm(R, -1) {
 		vector<vi> g(L);
 		for (auto [x, y]: es) g[x].push_back(y);
 
@@ -25,7 +25,7 @@ struct Hopcroft {
 			}
 			rep(ind, 0, sz(que) - 1) {
 				int i = que[ind];
-				for (auto j: g[i]) if (rdis[j] == -1) {
+				for (auto j : g[i]) if (rdis[j] == -1) {
 					rdis[j] = ldis[i] + 1;
 					if (rm[j] != -1) {
 						ldis[rm[j]] = rdis[j] + 1;

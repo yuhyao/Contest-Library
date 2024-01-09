@@ -2,7 +2,7 @@
  * Author: Yuhao Yao
  * Date: 23-03-28
  * Description: Number Theoretic Transform. 
- *  class $T$ should have static function $getMod()$ to provide the $mod$. We usually just use $modnum$ as the template parameter.
+ *  class $T$ should have static function $get\_mod()$ to provide the $mod$. We usually just use $modnum$ as the template parameter.
  *  To keep the code short we just set the primitive root as $3$. However, it might be wrong when $mod \ne 998244353$. Here are some commonly used $mod$s and the corresponding primitive root.\\
  *  $g \to  mod~(\max \log(n))$:\\
  *  3 $\to$ 104857601 (22), 167772161 (25), 469762049 (26), 998244353 (23), 1004535809 (21);\\
@@ -19,7 +19,7 @@
 template<class mint>
 struct FFT {
 	static void dft(vector<mint> &as, int is_inv) { // is_inv == 1 -> idft.
-		static int mod = mint::getMod();
+		static int mod = mint::get_mod();
 		static mint root = 0; 
 		static vector<mint> ws(__builtin_ctz(mod - 1)), iws(ws);
 		if (root == 0) {

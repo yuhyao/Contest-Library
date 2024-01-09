@@ -8,7 +8,7 @@ template<int L>
 vi BronKerbosch(int n, const vector<pii> &es) {
 	using bs = bitset<L>;
 	vector<bs> nbrs(n);
-	for (auto [x, y]: es) {
+	for (auto [x, y] : es) {
 		nbrs[x].set(y);
 		nbrs[y].set(x);
 	}

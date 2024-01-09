@@ -7,12 +7,12 @@
  */
 vi Kuhn(int n, int m, const vector<pii> &es) {
 	vector<vi> g(n);
-	for (auto [x, y]: es) g[x].push_back(y);
+	for (auto [x, y] : es) g[x].push_back(y);
 	vi rm(m, -1);
 	rep(i, 0, n - 1) {
 		vi vis(m);
 		auto dfs = [&](auto &dfs, int x) -> int {
-			for (auto y: g[x]) if (vis[y] == 0) {
+			for (auto y : g[x]) if (vis[y] == 0) {
 				vis[y] = 1;
 				if (rm[y] == -1 || dfs(dfs, rm[y])) {
 					rm[y] = x;

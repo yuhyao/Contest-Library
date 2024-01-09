@@ -8,7 +8,7 @@
 struct LinearSieve {
 	vi ps, minp;
 	vi d, facnum, phi, mu;
-	LinearSieve(int n): minp(n + 1), d(n + 1), facnum(n + 1), phi(n + 1), mu(n + 1) {
+	LinearSieve(int n) : minp(n + 1), d(n + 1), facnum(n + 1), phi(n + 1), mu(n + 1) {
 		facnum[1] = phi[1] = mu[1] = 1;
 		rep(i, 2, n) {
 			if (minp[i] == 0) {
@@ -19,7 +19,7 @@ struct LinearSieve {
 				phi[i] = i - 1;
 				mu[i] = -1;
 			}
-			for (auto p: ps) {
+			for (auto p : ps) {
 				ll v = 1ll * i * p;
 				if (v > n) break;
 				minp[v] = p;

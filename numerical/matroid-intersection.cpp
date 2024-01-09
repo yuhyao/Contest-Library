@@ -7,7 +7,7 @@
  * Status: tested on https://codeforces.com/gym/102156/problem/D, https://codeforces.com/gym/101561/problem/B, https://official.contest.yandex.com/opencupXXII/contest/37753/problems/B/.
  */
 template<class T>
-vector<T> MatroidIntersection(const vector<T> &as, function<void(const vector<T>&)> rebuild, function<bool(const T&)> check1, function<bool(const T&)> check2) {
+vector<T> matroid_intersection(const vector<T> &as, function<void(const vector<T>&)> rebuild, function<bool(const T&)> check1, function<bool(const T&)> check2) {
 	int n = sz(as); 
 	vi used(n);
 	vector<vi> g;

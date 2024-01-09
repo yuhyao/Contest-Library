@@ -43,7 +43,7 @@ struct MInt {
 	friend bool operator !=(Z a, Z b) { return a.x != b.x; }
 	friend bool operator <(Z a, Z b) { return a.x < b.x; }
 
-	static unsigned getMod() { return mod; } // ntt need this.
+	static unsigned get_mod() { return mod; } // ntt need this.
 	/// end-hash
 
 	friend istream& operator >>(istream &is, Z &a) {

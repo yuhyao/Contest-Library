@@ -18,7 +18,7 @@ public:
 			rep(i, 0, sz(as) - 1) rep(j, 0, sz(bs) - 1) cs[i + j] += as[i] * bs[j];
 			return cs;
 		} else {
-			unsigned mod = mint::getMod();
+			unsigned mod = mint::get_mod();
 			int M = sqrt(mod) + 0.5;
 			int n = sz(as) + sz(bs) - 1, n2 = 1 << __lg(n * 2 - 1);
 			vector<cp> hs0(n2, 0), ls0(n2, 0), hs1(n2, 0), ls1(n2, 0);

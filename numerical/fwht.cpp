@@ -17,6 +17,6 @@ void fwht(vector<T> &a, int is_inv) {
 			}
 
 	if (is_inv) {
-		for(auto &x: a) x = x / n;
+		for(auto &x : a) x = x / n;
 	}
 }

@@ -11,7 +11,7 @@ struct TwoSat {
 	vector<vector<int>> g;
 	vector<int> ans;
 
-	TwoSat(int n): n(n), g(n * 2), ans(n) {}
+	TwoSat(int n) : n(n), g(n * 2), ans(n) {}
 
 	void add_clause(int x, bool a, int y, bool b) {
 		g[x * 2 + !a].push_back(y * 2 + b);

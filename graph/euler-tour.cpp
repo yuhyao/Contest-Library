@@ -10,10 +10,10 @@ struct EulerTour {
 	vector<vi> tours;
 	vi ori;
 
-	EulerTour(int n, const vector<pii> &es, int dir = 0): n(n), ori(sz(es)) {
+	EulerTour(int n, const vector<pii> &es, int dir = 0) : n(n), ori(sz(es)) {
 		vector<vi> g(n);
 		int m = 0;
-		for (auto [x, y]: es) {
+		for (auto [x, y] : es) {
 			g[x].push_back(m);
 			if (!dir) g[y].push_back(m);
 			m++;

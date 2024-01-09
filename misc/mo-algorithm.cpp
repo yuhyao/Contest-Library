@@ -19,7 +19,7 @@ vector<T> Mo(int n, const vector<pii> &qs, function<void(int)> pointAdd, functio
 
 	vector<T> ans(m);
 	int l = 0, r = -1;
-	for (auto i: inds) {
+	for (auto i : inds) {
 		auto [ql, qr] = qs[i];
 		while (r < qr) pointAdd(++r);
 		while (r > qr) pointErase(r--);

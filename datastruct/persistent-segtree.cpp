@@ -21,7 +21,7 @@ struct PersistSegtree {
 	int n;
 	vector<node> t;
 	// node 0 is left as virtual empty node.
-	PersistSegtree(int n, int q): n(n), t(1) {
+	PersistSegtree(int n, int q) : n(n), t(1) {
 		assert(n > 0);
 		t.reserve(q * (__lg(n) + 2) + 1);
 	}

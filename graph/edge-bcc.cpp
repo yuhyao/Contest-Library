@@ -19,7 +19,7 @@ auto EdgeBCC(int n, const vector<pii> &es, int st = 0) {
 	auto dfs = [&](auto dfs, int now) -> void {
 		low[now] = dfn[now] = cnt++;
 		sta.push_back(now);
-		for (auto ind: g[now]) if (mark[ind] == 0) {
+		for (auto ind : g[now]) if (mark[ind] == 0) {
 			mark[ind] = 1;
 			auto [x, y] = es[ind];
 			int v = now ^ x ^ y;

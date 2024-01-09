@@ -11,7 +11,7 @@ class SparseTable {
 	vector<vector<T>> st;
 	const F func;
 public:
-	SparseTable(const vector<T> &init, const F &f): n(sz(init)), func(f) {
+	SparseTable(const vector<T> &init, const F &f) : n(sz(init)), func(f) {
 		assert(n > 0);
 		st.assign(__lg(n) + 1, vector<T>(n));
 		st[0] = init;

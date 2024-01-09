@@ -5,7 +5,7 @@
  * Time: O(\log n).
  * Status: tested on https://www.luogu.com.cn/problem/P6091.
  */
-bool hasPrimitiveRoot(ll n) {
+bool has_primitive_root(ll n) {
 	assert(n > 1);
 	if (n % 4 == 0) return n == 4;
 	if (n % 2 == 0) n /= 2;

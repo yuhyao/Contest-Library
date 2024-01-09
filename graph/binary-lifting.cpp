@@ -11,7 +11,7 @@ struct BinaryLifting {
 	vi dep;
 	vector<vi> anc;
 
-	BinaryLifting(const vector<vi> &g, int rt = 0): n(sz(g)), dep(n, -1) {
+	BinaryLifting(const vector<vi> &g, int rt = 0) : n(sz(g)), dep(n, -1) {
 		assert(n > 0);
 		anc.assign(n, vi(__lg(n) + 1));
 		auto dfs = [&](auto &dfs, int now, int fa) -> void {
@@ -21,7 +21,7 @@ struct BinaryLifting {
 			rep(i, 1, __lg(n)) {
 				anc[now][i] = anc[now][i - 1] == -1 ? -1 : anc[anc[now][i - 1]][i - 1];
 			}
-			for (auto v: g[now]) if (v != fa) dfs(dfs, v, now);
+			for (auto v : g[now]) if (v != fa) dfs(dfs, v, now);
 		};
 		dfs(dfs, rt, -1);
 	}

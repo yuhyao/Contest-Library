@@ -13,7 +13,7 @@ struct CapacityScaling {
 	vector<E> es;
 	vector<vi> g;
 
-	CapacityScaling(int n): n(n), g(n) {}
+	CapacityScaling(int n) : n(n), g(n) {}
 
 	void add_edge(int u, int v, flow_t c, bool dir = 1) {
 		g[u].push_back(sz(es)); es.push_back({v, c});

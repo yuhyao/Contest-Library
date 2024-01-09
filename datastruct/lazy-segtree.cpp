@@ -16,12 +16,12 @@ class LazySegTree {
 	vector<Info> info;
 	vector<Tag> tag;
 public:
-	LazySegTree(int n): n(n) {
+	LazySegTree(int n) : n(n) {
 		assert(n > 0);
 		info.resize(4 << __lg(n));
 		tag.resize(4 << __lg(n));
 	}
-	LazySegTree(const vector<Info> &init): LazySegTree(sz(init)) {
+	LazySegTree(const vector<Info> &init) : LazySegTree(sz(init)) {
 		auto build = [&](auto &dfs, int i, int l, int r) {
 			if (l == r) {
 				info[i] = init[l];

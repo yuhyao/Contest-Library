@@ -12,11 +12,11 @@ struct Segtree {
 	int n;
 	vector<Info> info;
 
-	Segtree(int n): n(n) {
+	Segtree(int n) : n(n) {
 		assert(n > 0);
 		info.resize(n * 2);
 	}
-	Segtree(const vector<Info> &init): Segtree(sz(init)) {
+	Segtree(const vector<Info> &init) : Segtree(sz(init)) {
 		rep(i, 0, n - 1) info[n + i] = init[i];
 		revrep(i, 0, n - 1) info[i] = info[i * 2] + info[i * 2 + 1];
 	}

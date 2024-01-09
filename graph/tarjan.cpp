@@ -12,7 +12,7 @@ auto tarjan(const vector<vi> &g) {
 	auto dfs = [&](auto &dfs, int now) -> void {
 		dfn[now] = low[now] = cnt++;
 		sta.push_back(now);
-		for (auto v: g[now]) {
+		for (auto v : g[now]) {
 			if (dfn[v] == -1) {
 				dfs(dfs, v);
 				low[now] = min(low[now], low[v]);

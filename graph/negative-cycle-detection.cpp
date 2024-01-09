@@ -13,9 +13,9 @@ template<class T> struct Edge {
 template<class T>
 bool NegCycle(int n, const vector<Edge<T>> &es) {
 	vector<T> dis(n, 0);
-	rep(rd, 1, n - 1) for (auto [u, v, w]: es) {
+	rep(rd, 1, n - 1) for (auto [u, v, w] : es) {
 		dis[v] = min(dis[v], dis[u] + w);
 	}
-	for (auto [u, v, w]: es) if (dis[v] > dis[u] + w) return 1;
+	for (auto [u, v, w] : es) if (dis[v] > dis[u] + w) return 1;
 	return 0;
 }

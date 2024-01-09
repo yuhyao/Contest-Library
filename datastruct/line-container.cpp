@@ -15,7 +15,7 @@ struct Line {
 };
 
 template<class T>
-class LineContainer: private set<Line<T>, less<>> {
+class LineContainer : private set<Line<T>, less<>> {
 	static constexpr bool isInt = is_integral_v<T>;
 	static constexpr T inf = numeric_limits<T>::max();
 public:

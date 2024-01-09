@@ -5,7 +5,7 @@
  * Time: Roughly O(n^{1 / 4} \log^2 n) for $n \le 10^9$. Practically really fast.
  * Status: tested on https://www.luogu.com.cn/problem/P6091.
  */
-ll getPrimitiveRoot(ll n) {
+ll get_primitive_root(ll n) {
 	auto getps = [](ll x) {
 		vector<ll> ps;
 		for (ll i = 2; i * i <= x; i++) {

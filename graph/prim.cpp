@@ -20,7 +20,7 @@ vi Prim(int n, const vector<tuple<int, int, T>> &es) {
 	auto push = [&](int now) {
 		vis[now] = 1;
 		dis[now] = {inf, -1};
-		for (auto ind: g[now]) {
+		for (auto ind : g[now]) {
 			auto [x, y, w] = es[ind];
 			int v = now ^ x ^ y;
 			if (vis[v] == 0) {

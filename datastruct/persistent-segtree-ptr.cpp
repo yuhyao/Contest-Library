@@ -26,7 +26,7 @@ struct PersistSegtree {
 	int n;
 	ptr rt;
 
-	PersistSegtree(int n, const ptr &_rt = nullptr): n(n), rt(_rt) { assert(n > 0); }
+	PersistSegtree(int n, const ptr &_rt = nullptr) : n(n), rt(_rt) { assert(n > 0); }
 
 	template<class... T>
 	PersistSegtree point_apply(int pos, const T&... val) {

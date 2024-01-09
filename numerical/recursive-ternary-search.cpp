@@ -7,7 +7,7 @@
  * Time: O(\log(1 / \epsilon) ^ {d} \cdot C), where $C$ is the time for evaluating the function $f$.
  * Status: tested on https://codeforces.com/gym/101981/problem/D.
  */
-template<class T> T RecTS(int d, const vector<T> &mn, const vector<T> &mx, function<T(const vector<T>&)> f) {
+template<class T> T rec_ternary_search(int d, const vector<T> &mn, const vector<T> &mx, function<T(const vector<T>&)> f) {
 	vector<T> xs(d);
 	auto dfs = [&](auto &dfs, int dep) {
 		if (dep == d) return f(xs);

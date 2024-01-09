@@ -8,7 +8,7 @@ struct Fenwick {
 	int n;
 	vector<T> as;
 
-	Fenwick(int n): n(n), as(n + 1, 0) {}
+	Fenwick(int n) : n(n), as(n + 1, 0) {}
 
 	void add(int i, T x) { 
 		for (i++; i <= n; i += i & -i) as[i] += x;

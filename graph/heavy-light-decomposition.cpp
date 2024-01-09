@@ -10,12 +10,12 @@
 struct HLD {
 	int n; /// start-hash
 	vi fa, hson, dfn, dep, top;
-	HLD(vector<vi> &g, int rt = 0): n(sz(g)), fa(n, -1), hson(n, -1), dfn(n), dep(n, 0), top(n) {
+	HLD(vector<vi> &g, int rt = 0) : n(sz(g)), fa(n, -1), hson(n, -1), dfn(n), dep(n, 0), top(n) {
 		vi siz(n);
 		auto dfs = [&](auto &dfs, int now) -> void {
 			siz[now] = 1;
 			int mx = 0;
-			for (auto v: g[now]) if (v != fa[now]) {
+			for (auto v : g[now]) if (v != fa[now]) {
 				dep[v] = dep[now] + 1;
 				fa[v] = now;
 				dfs(dfs, v);
@@ -34,7 +34,7 @@ struct HLD {
 			dfn[now] = cnt++;
 			if (hson[now] == -1) return;
 			dfs(dfs, hson[now], sp);
-			for (auto v: g[now]) {
+			for (auto v : g[now]) {
 				if(v != hson[now] && v != fa[now]) dfs(dfs, v, v);
 			}
 		};

@@ -14,7 +14,7 @@ class SparseTable2D {
 	vector<vector<vvt>> st;
 	const F func;
 public:
-	SparseTable2D(const vvt &init, const F &f): n(sz(init)), func(f) {
+	SparseTable2D(const vvt &init, const F &f) : n(sz(init)), func(f) {
 		assert(n > 0);
 		m = sz(init[0]);
 		assert(m > 0);

@@ -15,11 +15,11 @@ struct Segtree {
 	int n; 
 	vector<Info> info;
 
-	Segtree(int n): n(n) {
+	Segtree(int n) : n(n) {
 		assert(n > 0);
 		info.resize(4 << __lg(n));
 	}
-	Segtree(const vector<Info> &init): Segtree(sz(init)) {
+	Segtree(const vector<Info> &init) : Segtree(sz(init)) {
 		auto build = [&](auto &dfs, int i, int l, int r) {
 			if (l == r) {
 				info[i] = init[l];

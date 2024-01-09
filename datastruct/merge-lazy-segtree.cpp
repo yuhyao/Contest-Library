@@ -11,7 +11,7 @@ struct MergeLazySegtree {
 		Info info;
 		Tag tag;
 		unique_ptr<node> ls, rs;
-		node(): info{}, tag{}, ls{}, rs{} {}
+		node() : info{}, tag{}, ls{}, rs{} {}
 		void pull() {
 			info = (ls ? ls->info : Info{}) + (rs ? rs->info : Info{});
 		}

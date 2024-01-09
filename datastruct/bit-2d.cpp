@@ -6,7 +6,7 @@ template<class T> struct BIT2D {
 	int n, m;
 	vector<vector<T>> a;
 
-	BIT2D(int n, int m): n(n), m(m), a(n + 1, vector<T>(m + 1)) {}
+	BIT2D(int n, int m) : n(n), m(m), a(n + 1, vector<T>(m + 1)) {}
 
 	void add(int x, int y, T val) {
 		for (int i = x + 1; i <= n; i += i & -i)

@@ -14,7 +14,7 @@ struct Dinic {
 	vector<vi> g;
 	vi dis; // Put it here to get the minimum cut easily.
 
-	Dinic(int n): n(n), g(n) {}
+	Dinic(int n) : n(n), g(n) {}
 
 	void add_edge(int u, int v, flow_t c, bool dir = 1) {
 		g[u].push_back(sz(es)); es.push_back({v, c});
@@ -29,7 +29,7 @@ struct Dinic {
 			
 			rep(ind, 0, sz(que) - 1) {
 				int now = que[ind];
-				for (auto i: g[now]) {
+				for (auto i : g[now]) {
 					int v = es[i].to;
 					if (es[i ^ 1].a > 0 && dis[v] == -1) {
 						dis[v] = dis[now] + 1;

@@ -16,7 +16,7 @@ struct UndoDSU {
 	vi fa, siz;
 	vector<pii> sta;
 
-	UndoDSU(int n): fa(n), siz(n, 1) {
+	UndoDSU(int n) : fa(n), siz(n, 1) {
 		iota(all(fa), 0);
 	}
 

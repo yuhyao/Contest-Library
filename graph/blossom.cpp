@@ -7,7 +7,7 @@
  */
 vi Blossom(int n, const vector<pii> &es) {
 	vector<vi> g(n);
-	for (auto [x, y]: es) {
+	for (auto [x, y] : es) {
 		g[x].push_back(y);
 		g[y].push_back(x);
 	}
@@ -54,7 +54,7 @@ vi Blossom(int n, const vector<pii> &es) {
 
 		rep(ind, 0, sz(que) - 1) {
 			int now = que[ind];
-			for (auto v: g[now]) {
+			for (auto v : g[now]) {
 				if (getfa(now) == getfa(v) || clr[v] == 1) continue;
 				if (clr[v] == -1) {
 					clr[v] = 1;

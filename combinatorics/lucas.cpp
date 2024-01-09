@@ -9,11 +9,11 @@
  * Time: O(p) for preprosessing and O(\log_p n) for one query.
  * Status: tested on https://www.luogu.com.cn/problem/P3807.
  */
-template<class Mint>
+template<class Z>
 struct Lucas {
 	int p;
-	vector<Mint> fac, ifac;
-	Lucas(int p = Mint::getMod()): p(p), fac(p), ifac(p) {
+	vector<Z> fac, ifac;
+	Lucas(int p = Z::get_mod()): p(p), fac(p), ifac(p) {
 		fac[0] = 1;
 		rep(i, 1, p - 1) fac[i] = fac[i - 1] * i;
 		ifac[p - 1] = 1 / fac[p - 1];
@@ -21,8 +21,8 @@ struct Lucas {
 	}
 
 	template<class T = ll>
-	Mint binom(T n, T m) {
-		Mint res = 1;
+	Z binom(T n, T m) {
+		Z res = 1;
 		while (n || m) {
 			T a = n % p, b = m % p;
 			if (a < b) return 0;

@@ -20,7 +20,7 @@ struct UndoDSU {
 	vector<Info> info;
 	vector<tuple<int, int, Info, T>> sta;
 
-	UndoDSU(const vector<Info> &init): fa(sz(init)), siz(sz(init), 1), info(init) {
+	UndoDSU(const vector<Info> &init) : fa(sz(init)), siz(sz(init), 1), info(init) {
 		iota(all(fa), 0);
 	}
 
