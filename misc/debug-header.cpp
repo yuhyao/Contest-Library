@@ -1,3 +1,9 @@
+/**
+ * Author: Yuhao Yao
+ * Source: From tourist's header.
+ * Date: 24-01-09
+ * Description: debug header.
+*/
 template<class A, class B> string to_string(const pair<A, B> &p);
 template<class A, class B, class C> string to_string(const tuple<A, B, C> &p);
 template<class A, class B, class C, class D> string to_string(const tuple<A, B, C, D> &p);
