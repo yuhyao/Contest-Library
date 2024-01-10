@@ -3,7 +3,7 @@
  * Date: 23-05-01
  * Description: Undoable Disjoint Union Set for set ${0, ..., N - 1}$. 
  *  Use $top = top()$ to get a save point; use $undo(top)$ to go back to the save point.
- *  Note that Info should have a member function join(const Info&) and a static variable $global$;
+ *  Note that Info should have a member function $join$ and a static variable $global$;
  * Usage: 
  *  UndoDSU dsu(n);
  *  ...

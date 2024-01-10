@@ -2,7 +2,7 @@
  * Author: Yuhao Yao
  * Date: 24-01-07
  * Description: Segment tree with lazy propogation.
- * Usage: Always define functions \textbf{info\_apply} and \textbf{tag\_apply} to tell segment tree how you apply modification.
+ *  Always define functions \textbf{info\_apply} and \textbf{tag\_apply} to tell segment tree how you apply modification.
  *  Combine is set as plus so if you just let T be numerical type then you have range sum in the info and as range query result. To have something different, say rangeMin, define a struct with constructer and + operation.
  * Time: O(\log N) per operation.
  * Status: tested on https://codeforces.com/gym/103371/problem/M.

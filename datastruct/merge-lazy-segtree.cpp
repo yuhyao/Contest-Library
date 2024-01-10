@@ -1,7 +1,7 @@
 /**
  * Author: Yuhao Yao
  * Date: 24-01-07
- * Description: Merge Lazy Segment Tree. point\_apply creates nodes when nodes are missing. range\_apply only applies to existing nodes.
+ * Description: Merge Lazy Segment Tree. \textbf{point\_apply} creates nodes when nodes are missing. \textbf{range\_apply} only applies to existing nodes.
  * Time: O(\log n) for point\_apply, range\_apply, range\_ask; Amortized O(\log n) for Merge.
  * Status: tested on https://codeforces.com/contest/1455/problem/G.
  */

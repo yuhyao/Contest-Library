@@ -1,7 +1,7 @@
 /**
  * Author: Yuhao Yao
  * Date: 24-01-07
- * Description: Merge Segment Tree. point\_apply creates nodes when nodes are missing. Note that MergeSeg is not copyable and thus you can not write things like vector<MergeSegtree<int>> segs(n, n);
+ * Description: Merge Segment Tree. \textbf{point\_apply} creates nodes when nodes are missing. Note that MergeSeg is not copyable and thus you can not write things like vector<MergeSegtree<int>> segs(n, n);
  * Time: O(\log n) for point\_apply, range\_ask; Amortized O(\log n) for Merge.
  * Status: tested on https://codeforces.com/gym/415469/problem/J.
 */

@@ -3,7 +3,7 @@
  * Date: 22-10-25
  * Description: Heavy Light Decomposition for a rooted tree $T$. The root is set as $0$ by default. It can be modified easily for forest.
  *  $g$ should be the adjacent list of the tree $T$.
- *  $chain_\apply(u, v, func, val)$ and $chain\_ask(u, v, func)$ are used for apply / query on the simple path from $u$ to $v$ on tree $T$. $func$ is the function you want to use to apply / query on a interval. (Say rangeApply / rangeAsk of Segment tree.)
+ *  $chain\_apply(u, v, func, val)$ and $chain\_ask(u, v, func)$ are used for apply / query on the simple path from $u$ to $v$ on tree $T$. $func$ is the function you want to use to apply / query on a interval. (Say rangeApply / rangeAsk of Segment tree.)
  * Time: O(|T|) for building. O(\log |T|) for lca. O(\log |T| \cdot A) for chain\_apply / chain\_ask, where $A$ is the running time of $func$ in chain\_apply / chain\_ask.
  * Status: tested on https://codeforces.com/contest/487/problem/E.
  */

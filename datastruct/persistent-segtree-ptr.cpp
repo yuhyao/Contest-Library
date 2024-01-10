@@ -2,16 +2,16 @@
  * Author: Yuhao Yao
  * Date: 24-01-08
  * Description: Persistent Segment Tree of range $[0, N - 1]$. Point apply and thus no lazy propogation.
- *  Always define a global $info\_apply$ function to tell segment tree how you apply modification. 
+ *  Always define a global \textbf{info\_apply} function to tell segment tree how you apply modification. 
  *  Combine is set as + operation. If you use your own struct, then please define constructor and + operation.
  *  Note that using shared\_ptr is slow but prevent memory leak. Change to raw pointer if time limit is tight.
  * Usage: Point Add and Range Sum.
- *  void apply(int \&a, int b) { a += b; } // global
+ *  void info_apply(int \&a, int b) { a += b; } // global
  *  ...
  *  PersistSegtree<int> pseg(10); // N = 10.
  *  using ptr = PersistSegtree<int>::ptr;
- *  ptr new_rt = pseg.point\_apply(nullptr, 9, 1); // add 1 to last position (position 9).
- *  int sum = pseg.range\_ask(new_rt, 7, 9); // ask the sum between position 7 and 9, wrt version new_rt.
+ *  ptr new_rt = pseg.point_apply(nullptr, 9, 1); // add 1 to last position (position 9).
+ *  int sum = pseg.range_ask(new_rt, 7, 9); // ask the sum between position 7 and 9, wrt version new_rt.
  * Time: O(\log N) per operation.
  * Status: tested on https://codeforces.com/contest/1479/problem/D, https://www.luogu.com.cn/problem/P7361, https://www.luogu.com.cn/problem/P4094.
  */

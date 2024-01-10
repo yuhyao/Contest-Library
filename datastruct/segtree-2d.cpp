@@ -2,9 +2,9 @@
  * Author: Yuhao Yao
  * Date: 24-01-07
  * Description: 2D Segment Tree of range $[oL, oR] \times [iL, iR]$. Point apply and thus no lazy propogation.
- *  Always define a global $apply$ function to tell segment tree how you apply modification. 
+ *  Always define a global \textbf{info_apply} function to tell segment tree how you apply modification. 
  *  Combine is set as + operation. If you use your own struct, then please define constructor and + operation.
- *  In constructor, $q$ is the number of $pointApply$ you will use. $oL$, $oR$, Note that range parameters can be negative.
+ *  In constructor, $q$ is the number of \textbf{point\_apply} you will use. $oL$, $oR$, Note that range parameters can be negative.
  * Usage: Point Add and Range (Rectangle) Sum.
  *  void info_apply(int \&a, int b) { a += b; } // global
  *  ...

@@ -2,7 +2,7 @@
  * Author: Yuhao Yao
  * Date: 24-01-08
  * Description: Segment tree. Point apply and thus no lazy propogation.
- * Usage: Always define a info\_apply function for class $Info$ you use to tell segment tree how you apply modification.
+ *  Always define an \textbf{info\_apply} function for class \textbf{Info} you use to tell segment tree how you apply modification.
  *  Combine is set as plus so if you just let T be numerical type then you have range sum in the info and as range query result. To have something different, say rangeMin, define a struct with constructer and + operation.
  * Time: O(\log N) per operation.
  * Status: tested on https://qoj.ac/contest/695/problem/1856, https://codeforces.com/gym/411278/problem/G.

@@ -5,7 +5,7 @@
  * Usage: BerlekampMMassey bm(vector<mint>{1, 2, 4});
    vector<mint> cs = bm.getRec();
    mint val = bm.kth_term(1ll << 60);
- * TIme: $O(nm)$ for finding sequence $c$ where $m$ is the length of $c$; $O(m^2 \log k)$ for getting the $k$-th term.
+ * Time: $O(nm)$ for finding sequence $c$ where $m$ is the length of $c$; $O(m^2 \log k)$ for getting the $k$-th term.
  * Status: tested on https://judge.yosupo.jp/problem/find_linear_recurrence, https://qoj.ac/problem/2574.
  */
 template<class T>
