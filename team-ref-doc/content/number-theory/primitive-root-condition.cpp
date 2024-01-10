@@ -1,0 +1,1 @@
+../../../number-theory/primitive-root-condition.cpp
