@@ -9,12 +9,12 @@
  */
 template<class T, class FFT = FFT<T>>
 struct Poly : vector<T> {
-	using poly = Poly;
+	using poly = Poly; /// start-hash
 	using vector<T>::vector;
 	Poly(const vector<T> &vec) : vector<T>(vec) {}
 	Poly(vector<T> &&vec) : vector<T>(vec) {}
 	
-	friend poly& operator +=(poly &as, const poly &bs) { /// start-hash
+	friend poly& operator +=(poly &as, const poly &bs) {
 		if (sz(as) < sz(bs)) as.resize(sz(bs), 0);
 		rep(i, 0, sz(bs) - 1) as[i] += bs[i];
 		return as;
