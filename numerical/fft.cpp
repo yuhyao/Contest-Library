@@ -10,7 +10,7 @@
  */
 template<class T>
 struct FFT {
-	using cp = complex<T>;
+	using cp = complex<T>; /// start-hash
 
 	static void dft(vector<cp> &as, int is_inv) { // is_inv == 1 -> idft.
 		const T pi = acos(T{-1});
@@ -42,8 +42,9 @@ struct FFT {
 		if (is_inv) {
 			for (auto &x: as) x /= n;
 		}
-	}
-	template<class Z>
+	} /// end-hash
+
+	template<class Z> /// start-hash
 	static vector<Z> conv(const vector<Z> &as, const vector<Z> &bs) {
 		if (min(sz(as), sz(bs)) <= 128) {
 			vector<T> cs(sz(as) + sz(bs) - 1);
@@ -65,5 +66,5 @@ struct FFT {
 			rep(i, 0, n - 1) res[i] = xs[i].real + eps;
 			return res;
 		}
-	}
+	} /// end-hash
 };
