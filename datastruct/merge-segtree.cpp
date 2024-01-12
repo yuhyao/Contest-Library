@@ -7,7 +7,7 @@
 */
 template<class Info>
 struct MergeSegtree {
-	struct node {
+	struct node { /// start-hash
 		Info info;
 		unique_ptr<node> ls, rs;
 		node() : info{}, ls{}, rs{} {}
@@ -40,8 +40,9 @@ struct MergeSegtree {
 		assert(n == rhs.n);
 		dfs(dfs, rt, rhs.rt, 0, n - 1);
 		rhs.rt = nullptr;
-	}
-	template<class... T>
+	} /// end-hash
+
+	template<class... T> /// start-hash
 	void point_apply(int p, const T&... val) {
 		auto dfs = [&](auto &dfs, ptr &now, int l, int r) -> void {
 			if (now == nullptr) now = make_unique<node>();
@@ -55,9 +56,9 @@ struct MergeSegtree {
 			now->pull();
 		};
 		dfs(dfs, rt, 0, n - 1);
-	}
+	} /// end-hash
 
-	Info range_ask(int ql, int qr) {
+	Info range_ask(int ql, int qr) { /// start-hash
 		Info res{};
 		auto dfs = [&](auto &dfs, const ptr &now, int l, int r) -> void {
 			if (qr < l || r < ql || now == nullptr) return;
@@ -71,9 +72,9 @@ struct MergeSegtree {
 		};
 		dfs(dfs, rt, 0, n - 1);
 		return res;
-	}
+	} /// end-hash
 
-	int find_first(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_first(int ql, int qr, function<bool(const Info&, int, int)> func) { /// start-hash
 		auto dfs = [&](auto &dfs, ptr &now, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(now ? now->info : Info{}, l, r) == false)) return -1;
 			if (l == r) return l;
@@ -85,5 +86,5 @@ struct MergeSegtree {
 			else return dfs(dfs, now->rs, mid + 1, r);
 		};
 		return dfs(dfs, rt, 0, n - 1);
-	}
+	} /// end-hash
 };
