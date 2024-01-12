@@ -17,7 +17,7 @@
  */
 template<class Info>
 struct SegTree2D {
-	struct iNode { Info info; int ls, rs; };
+	struct iNode { Info info; int ls, rs; }; /// start-hash
 	struct oNode { int id; int ls, rs; };
 	
 	int oL, oR, iL, iR;
@@ -62,9 +62,9 @@ struct SegTree2D {
 		};
 		odfs(odfs, rt, oL, oR);
 		return rt;
-	}
+	} /// end-hash
 
-	Info range_ask(int rt, int qol, int qor, int qil, int qir) {
+	Info range_ask(int rt, int qol, int qor, int qil, int qir) { /// start-hash
 		Info res{};
 		auto idfs = [&](auto &dfs, int i, int l, int r) {
 			if (!i || qir < l || r < qil) return;
@@ -88,5 +88,5 @@ struct SegTree2D {
 		};
 		odfs(odfs, rt, oL, oR);
 		return res;
-	}
+	} /// end-hash
 };
