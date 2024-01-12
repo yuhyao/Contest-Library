@@ -28,7 +28,7 @@ private:
 	using set<Line<T>, less<>>::erase;
 	using set<Line<T>, less<>>::lower_bound;
 public:	
-	void add(T k, T b) {
+	void add(T k, T b) { /// start-hash
 		auto fix = [&](iterator it) -> bool {
 			if (next(it) == end()) {
 				it->p = inf;
@@ -59,11 +59,11 @@ public:
 				fix(it);
 			}
 		}
-	}
+	} /// end-hash
 
-	T get(T x) const {
+	T get(T x) const { /// start-hash
 		assert(size() > 0);
 		auto l = *lower_bound(x);
 		return l.k * x + l.b;
-	}
+	} /// end-hash
 };
