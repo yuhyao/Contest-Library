@@ -4,7 +4,7 @@
  * Description: historical sum with apply = set. A node $Mat(t, val)$ corresponds to setting the value to $val$ from time $t$ (including $t$). Use $getVal(t)$ to get historical sum up to time $t$ (including $t$).
  * Status: tested on https://codeforces.com/contest/1824/problem/D.
  */
-template<class T>
+template<class T> /// start-hash
 struct Mat {
 	T v10, v11, v20, v21;
 	Mat() { v10 = v20 = v21 = 0; v11 = 1; }
@@ -25,9 +25,9 @@ struct Mat {
 		res.v21 = cur.v21 * x.v11 + x.v21;
 		cur = res;
 	}
-};
+}; /// end-hash
 
-template<class T>
+template<class T> /// start-hash
 struct Vec {
 	T v0, v1;
 	Vec(T val = 0) { v0 = v1 = val; }
@@ -44,4 +44,4 @@ struct Vec {
 	friend void info_apply(Vec &cur, int l, int r, const Mat<T> &x) { cur.apply(r - l + 1, x); }
 	friend void info_apply(Vec &cur, const Mat<T> &x) { cur.apply(1, x); }
 	T get_val(int t) const { return v1 * T(t) + v0; }
-};
+}; /// end-hash
