@@ -7,7 +7,7 @@
  * Status: tested on https://codeforces.com/contest/231/problem/E. https://codeforces.com/contest/1707/problem/C.
  */
 struct BinaryLifting {
-	int n;
+	int n; /// start-hash
 	vi dep;
 	vector<vi> anc;
 
@@ -25,12 +25,14 @@ struct BinaryLifting {
 		};
 		dfs(dfs, rt, -1);
 	}
+
 	int swim(int x, int h) {
 		for (int i = 0; h && x != -1; h >>= 1, i++) {
 			if (h & 1) x = anc[x][i];
 		}
 		return x;
 	}
+
 	int lca(int x, int y) {
 		if (dep[x] < dep[y]) swap(x, y);
 		x = swim(x, dep[x] - dep[y]);
@@ -42,11 +44,12 @@ struct BinaryLifting {
 			}
 		}
 		return anc[x][0];
-	}
-	int next(int u, int v) {
+	} /// end-hash
+
+	int next(int u, int v) { /// start-hash
 		assert(u != v);
 		int delta = dep[v] - dep[u];
 		if (delta > 0 && swim(v, delta) == u) return swim(v, delta - 1);
 		else return anc[u][0];
-	}
+	} /// end-hash
 };
