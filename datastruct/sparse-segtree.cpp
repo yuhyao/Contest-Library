@@ -14,7 +14,7 @@
  */
 template<class Info>
 struct SparseSegtree {
-	struct node { Info info; int ls, rs; };
+	struct node { Info info; int ls, rs; }; /// start-hash
 	int n;
 	vector<node> ts;
 	// node 0 is left as virtual empty node.
@@ -41,9 +41,9 @@ struct SparseSegtree {
 			return i;
 		};
 		dfs(dfs, 1, 0, n - 1);
-	}
+	} /// end-hash
 
-	Info range_ask(int ql, int qr) {
+	Info range_ask(int ql, int qr) { /// start-hash
 		Info res{};
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (i == 0 || qr < l || r < ql) return;
@@ -57,5 +57,5 @@ struct SparseSegtree {
 		};
 		dfs(dfs, 1, 0, n - 1);
 		return res;
-	}
+	} /// end-hash
 };
