@@ -5,7 +5,7 @@
  */
 template<class T>
 struct Fenwick {
-	int n;
+	int n; /// start-hash
 	vector<T> as;
 
 	Fenwick(int n) : n(n), as(n + 1, 0) {}
@@ -21,9 +21,9 @@ struct Fenwick {
 	}
 
 	T range_ask(int l, int r) { return ask(r) - ask(l - 1); }
-
+	/// end-hash
 	// assuming prefix sums are non-decreasing, finds the first pos such that ask(pos) >= x.
-	int lower_bound(T x) {
+	int lower_bound(T x) { /// start-hash
 		assert(n > 0);
 		int pos = 0;
 		for (int h = 1 << __lg(n); h; h >>= 1) {
@@ -33,5 +33,5 @@ struct Fenwick {
 			}
 		}
 		return pos;
-	}
+	} /// end-hash
 };
