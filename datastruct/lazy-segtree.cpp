@@ -9,7 +9,7 @@
  */
 template<class Info, class Tag>
 class LazySegTree {
-	#define ls i * 2
+	#define ls i * 2 /// start-hash
 	#define rs i * 2 + 1
 
 	int n;
@@ -66,9 +66,9 @@ public:
 			pull(i);
 		};
 		dfs(dfs, 1, 0, n - 1);
-	}
+	} /// end-hash
 
-	Info range_ask(int ql, int qr) {
+	Info range_ask(int ql, int qr) { /// start-hash
 		Info res{};
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql) return;
@@ -83,9 +83,9 @@ public:
 		};
 		dfs(dfs, 1, 0, n - 1);
 		return res;
-	}
+	} /// end-hash
 
-	int find_first(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_first(int ql, int qr, function<bool(const Info&, int, int)> func) { /// start-hash
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(info[i], l, r) == 0)) return -1;
 			if (l == r) return l;
@@ -97,9 +97,9 @@ public:
 			else return dfs(dfs, rs, mid + 1, r);
 		};
 		return dfs(dfs, 1, 0, n - 1);
-	};
+	}; /// end-hash
 
-	int find_last(int ql, int qr, function<bool(const Info&, int, int)> func) {
+	int find_last(int ql, int qr, function<bool(const Info&, int, int)> func) { /// start-hash
 		auto dfs = [&](auto &dfs, int i, int l, int r) {
 			if (qr < l || r < ql || (ql <= l && r <= qr && func(info[i], l, r) == 0)) return -1;
 			if (l == r) return l;
@@ -111,7 +111,7 @@ public:
 			else return dfs(dfs, ls, l, mid);
 		};
 		return dfs(dfs, 1, 0, n - 1);
-	};
+	}; /// end-hash
 
 	#undef ls
 	#undef rs
