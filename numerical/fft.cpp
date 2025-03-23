@@ -1,12 +1,12 @@
 /**
  * Author: Yuhao Yao
- * Date: 23-03-23
+ * Date: 25-03-23
  * Description: Fast Fourier Transform. $T$ can be \textbf{double} or \textbf{long double}.
- * Usage: FFT<double> fft;
- *  vector<double> cs = fft.conv(vector<double>{1, 2, 3}, vector<double>{3, 4, 5});
- *  vector<int> ds = fft.conv(vector<int>{1, 2, 3}, vector<int>{3, 4, 5});
+ * Usage: // Always use FFT<double> or FFT<long double>.
+ *  vector<double> cs = FFT<double>::conv(vector<double>{1, 2, 3}, vector<double>{3, 4, 5});
+ *  vector<int> ds = FFT<double>::conv(vector<int>{1, 2, 3}, vector<int>{3, 4, 5});
  * Time: O(N \log N).
- * Status: tested on https://judge.yosupo.jp/problem/convolution_mod_1000000007.
+ * Status: tested on https://codeforces.com/gym/101239/problem/J.
  */
 template<class T>
 struct FFT {
@@ -47,7 +47,7 @@ struct FFT {
 	template<class Z>
 	static vector<Z> conv(const vector<Z> &as, const vector<Z> &bs) {
 		if (min(sz(as), sz(bs)) <= 128) {
-			vector<T> cs(sz(as) + sz(bs) - 1);
+			vector<Z> cs(sz(as) + sz(bs) - 1);
 			rep(i, 0, sz(as) - 1) rep(j, 0, sz(bs) - 1) cs[i + j] += as[i] * bs[j];
 			return cs;
 		} else {
@@ -63,7 +63,7 @@ struct FFT {
 			dft(xs, 1);
 			vector<Z> res(n);
 			T eps = T{0.5} * (static_cast<Z>(1e-9) == 0);
-			rep(i, 0, n - 1) res[i] = xs[i].real + eps;
+			rep(i, 0, n - 1) res[i] = xs[i].real() + eps;
 			return res;
 		}
 	}
